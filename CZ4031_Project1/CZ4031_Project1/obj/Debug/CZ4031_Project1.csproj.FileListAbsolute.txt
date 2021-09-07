@@ -1,7 +1,0 @@
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\bin\Debug\CZ4031_Project1.exe.config
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\bin\Debug\CZ4031_Project1.exe
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\bin\Debug\CZ4031_Project1.pdb
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.csprojResolveAssemblyReference.cache
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.csproj.CoreCompileInputs.cache
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.exe
-C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.pdb
