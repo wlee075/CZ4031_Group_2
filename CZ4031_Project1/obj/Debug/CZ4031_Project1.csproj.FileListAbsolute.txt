@@ -5,3 +5,10 @@ C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Pro
 C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.csproj.CoreCompileInputs.cache
 C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.exe
 C:\Users\Owner\source\repos\CZ4031_Project1\CZ4031_Project1\obj\Debug\CZ4031_Project1.pdb
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\bin\Debug\CZ4031_Project1.exe.config
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\bin\Debug\CZ4031_Project1.exe
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\bin\Debug\CZ4031_Project1.pdb
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.csprojResolveAssemblyReference.cache
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.csproj.CoreCompileInputs.cache
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.exe
+D:\GitHub\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.pdb

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CZ4031_Project1
+namespace CZ4031_Project1.Functions
 {
-    public static class Insert
+    public static class Retrieve
     {
         public static void Start()
         {
-            Console.WriteLine("Inserting...");
+            Console.WriteLine("Retrieving...");
         }
     }
 }
