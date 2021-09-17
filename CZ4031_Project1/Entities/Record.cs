@@ -8,8 +8,8 @@ namespace CZ4031_Project1.Entities
 {
     public class Record
     {
-        public string tconst { get; set; }
-        public float rating { get; set; }
-        public int numVotes { get; set; }
+        public string Tconst { get; set; }
+        public float AverageRating { get; set; }
+        public int NumVotes { get; set; }
     }
 }

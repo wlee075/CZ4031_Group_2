@@ -43,15 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccessFileController.cs" />
+    <Compile Include="Controllers\Experiment1Controller.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\NodeController.cs" />
     <Compile Include="Entities\Node.cs" />
     <Compile Include="Entities\Record.cs" />
-    <Compile Include="Functions\Delete.cs" />
-    <Compile Include="Functions\Insert.cs" />
-    <Compile Include="Functions\Retrieve.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Experiment1View.cs" />
+    <Compile Include="Views\MainView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

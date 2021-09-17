@@ -6,19 +6,12 @@ using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Controllers
 {
-    public class MainController
+    public static class MainController
     {
-        public void Insert()
+        static string MainDirectory = "C:\\CZ4031_Project1_Grp2\\";
+        public static string GetMainDirectory()
         {
-            Functions.Insert.Start();
-        }
-        public void Delete()
-        {
-            Functions.Delete.Start();     
-        }
-        public void Retrieve()
-        {
-            Functions.Retrieve.Start();
+            return MainDirectory;
         }
     }
 }

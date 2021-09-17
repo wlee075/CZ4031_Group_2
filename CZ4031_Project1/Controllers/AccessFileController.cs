@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CZ4031_Project1.Entities;
+
 namespace CZ4031_Project1.Controllers
 {
     public class AccessFileController
@@ -20,7 +22,8 @@ namespace CZ4031_Project1.Controllers
             {
                 //Pass the file path and file name to the StreamReader constructor
                 StreamReader sr = new StreamReader(Directory);
-                //Read the first line of text
+                //Read the second line of text
+                sr.ReadLine();
                 line = sr.ReadLine();
                 //Continue to read until you reach end of file
                 while (line != null)
@@ -32,7 +35,6 @@ namespace CZ4031_Project1.Controllers
                 }
                 //close the file
                 sr.Close();
-                Console.ReadLine();
             }
             catch (Exception e)
             {
@@ -43,6 +45,44 @@ namespace CZ4031_Project1.Controllers
                 Console.WriteLine("Executing finally block.");
             }
             return line;
+        }
+        public List<Record> ReadAndConvert()
+        {
+            string line = "";
+            List<Record> records = new List<Record>();
+            try
+            {
+                //Pass the file path and file name to the StreamReader constructor
+                StreamReader sr = new StreamReader(Directory);
+                //Read the second line of text
+                sr.ReadLine();
+                line = sr.ReadLine();
+                Console.WriteLine("Reading from {0} ..." , Directory);
+                //Continue to read until you reach end of file
+                while (line != null)
+                {
+                    //write the line to console window
+                    string[] data = line.Split('\t');
+                    Record r = new Record();
+                    r.Tconst = data[0];
+                    r.AverageRating = float.Parse(data[1]);
+                    r.NumVotes = int.Parse(data[2]);
+                    records.Add(r);
+                    //Read the next line
+                    line = sr.ReadLine();
+                }
+                //close the file
+                sr.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Reading from {0} complete", Directory);
+            }
+            return records;
         }
         public void Write()
         {

@@ -8,6 +8,8 @@ namespace CZ4031_Project1.Entities
 {
     public class Node
     {
+        public int Level { get; set; }
+        public int Bucket { get; set; }
         public string Key { get; set; }
         public string Pointer { get; set; }
 
