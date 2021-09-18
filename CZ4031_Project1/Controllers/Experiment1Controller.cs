@@ -12,9 +12,8 @@ namespace CZ4031_Project1.Controllers
         string Directory = MainController.GetMainDirectory() + "data.tsv";
         const int blockSize = 100;
         const int blockHeader = 10;
-        int totalRecord = 0;
+        double totalRecord = 0;
         int recordSize = 0;
-        int recordPtrSize = 3;
         int availableSpace = blockSize - blockHeader;
         public string GetDirectory()
         {
@@ -26,7 +25,7 @@ namespace CZ4031_Project1.Controllers
             AccessFileController afController = new AccessFileController(Directory);
             List<Record> records = afController.ReadAndConvertToRecords();
 
-            // Get the maximum length of each fields
+            // Get the minimum and maximum length of each fields
             int minTconst = records.Select(z => z.Tconst).Min().Count();
             int maxTconst = records.Select(z => z.Tconst).Max().Count();
             int minAverageRating = records.Select(z => z.AverageRating.ToString()).Min().Count();
@@ -47,19 +46,35 @@ namespace CZ4031_Project1.Controllers
         {
             if(recordSize!=0)
             {
-                int recordsPerBlock = (blockSize - blockHeader) / (recordSize + recordPtrSize);
+                decimal recordPointerSize = Convert.ToDecimal(GetRecordPointerSize());
+                decimal recordsPerBlock = Convert.ToDecimal(availableSpace) / (recordSize + recordPointerSize);
+                recordsPerBlock = Math.Floor(recordsPerBlock);
                 decimal totalBlocks = Convert.ToDecimal(totalRecord) / (recordSize * recordsPerBlock);
                 totalBlocks = Math.Ceiling(totalBlocks);
                 decimal sizeOfDatabase = totalBlocks * blockSize;
-                Console.WriteLine("Record size: {0}", recordSize);
+                Console.WriteLine("Record size: {0} bytes", recordSize);
+                Console.WriteLine("Record pointer size: {0} bytes", recordPointerSize);
                 Console.WriteLine("Number of records per block: {0}", recordsPerBlock);
                 Console.WriteLine("Total Number of blocks: {0}", totalBlocks);
-                Console.WriteLine("Size of Database: {0}", sizeOfDatabase);
+                Console.WriteLine("Size of Database: {0} bytes", sizeOfDatabase);
             }
             else
             {
                 Console.WriteLine("Please store data first.");
             }
+        }
+        double GetRecordPointerSize()
+        {
+            double count = 0;
+            double records = totalRecord;
+            while(records > 0)
+            {
+               double highestBit =  Math.Pow(2, count);
+                records = records - highestBit;
+                count += 1;
+            }
+            // return bytes
+            return Math.Ceiling(count/8);
         }
     }
 }
