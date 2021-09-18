@@ -9,10 +9,9 @@ namespace CZ4031_Project1.Views
 {
     public static class Experiment1View
     {
-        static Experiment1Controller controller;
+        static Experiment1Controller controller = new Experiment1Controller();
         public static void Display()
         {
-            controller = new Experiment1Controller();
             string directory = controller.GetDirectory();
             Console.WriteLine("Please key in your selection: ");
             Console.WriteLine("1. Store the data from {0}", directory);
@@ -50,7 +49,8 @@ namespace CZ4031_Project1.Views
         }
         static void DisplayStatisticsView()
         {
-
+            controller.ShowStatistics();
+            Display();
         }
     }
 }

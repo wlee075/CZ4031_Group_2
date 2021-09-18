@@ -46,7 +46,7 @@ namespace CZ4031_Project1.Controllers
             }
             return line;
         }
-        public List<Record> ReadAndConvert()
+        public List<Record> ReadAndConvertToRecords()
         {
             string line = "";
             List<Record> records = new List<Record>();
@@ -84,16 +84,20 @@ namespace CZ4031_Project1.Controllers
             }
             return records;
         }
-        public void Write()
+        public void Write(List<string> lines)
         {
             try
             {
                 //Pass the filepath and filename to the StreamWriter Constructor
                 StreamWriter sw = new StreamWriter(Directory);
-                //Write a line of text
-                sw.WriteLine("Hello World@@@");
-                //Write a second line of text
-                sw.WriteLine("From the StreamWriter class");
+
+                foreach(var line in lines)
+                {
+                    //Write a line of text
+                    sw.WriteLine(line);
+                }
+
+
                 //Close the file
                 sw.Close();
             }
