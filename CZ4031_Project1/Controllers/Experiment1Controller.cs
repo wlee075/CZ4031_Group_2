@@ -11,10 +11,10 @@ namespace CZ4031_Project1.Controllers
     {
         string Directory = MainController.GetMainDirectory() + "data.tsv";
         const int blockSize = 100;
-        const int blockHeader = 10;
+        const int blockAddress = 10;
         double totalRecord = 0;
         int recordSize = 0;
-        int availableSpace = blockSize - blockHeader;
+        int availableSpace = blockSize - blockAddress;
         public string GetDirectory()
         {
             return Directory;
@@ -46,15 +46,18 @@ namespace CZ4031_Project1.Controllers
         {
             if(recordSize!=0)
             {
-                decimal recordPointerSize = Convert.ToDecimal(GetRecordPointerSize());
-                decimal recordsPerBlock = Convert.ToDecimal(availableSpace) / (recordSize + recordPointerSize);
+                decimal blockOffsetSize = Convert.ToDecimal(GetBlockOffsetSize());
+                decimal recordsPerBlock = Convert.ToDecimal(availableSpace) / (recordSize + blockOffsetSize);
                 recordsPerBlock = Math.Floor(recordsPerBlock);
-                decimal totalBlocks = Convert.ToDecimal(totalRecord) / (recordSize * recordsPerBlock);
+                decimal blockHeaderSize = blockAddress + blockOffsetSize * recordsPerBlock;
+                decimal totalBlocks = Convert.ToDecimal(totalRecord) / recordsPerBlock;
                 totalBlocks = Math.Ceiling(totalBlocks);
                 decimal sizeOfDatabase = totalBlocks * blockSize;
                 Console.WriteLine("Record size: {0} bytes", recordSize);
-                Console.WriteLine("Record pointer size: {0} bytes", recordPointerSize);
                 Console.WriteLine("Number of records per block: {0}", recordsPerBlock);
+                Console.WriteLine("Block address size: {0} bytes", blockAddress);
+                Console.WriteLine("Block offset size: {0} bytes", blockOffsetSize);
+                Console.WriteLine("Block header size: {0} bytes", blockHeaderSize);
                 Console.WriteLine("Total Number of blocks: {0}", totalBlocks);
                 Console.WriteLine("Size of Database: {0} bytes", sizeOfDatabase);
             }
@@ -63,7 +66,7 @@ namespace CZ4031_Project1.Controllers
                 Console.WriteLine("Please store data first.");
             }
         }
-        double GetRecordPointerSize()
+        double GetBlockOffsetSize()
         {
             double count = 0;
             double records = totalRecord;
