@@ -46,8 +46,10 @@
     <Compile Include="Controllers\Experiment1Controller.cs" />
     <Compile Include="Controllers\Experiment2Controller.cs" />
     <Compile Include="Controllers\MainController.cs" />
-    <Compile Include="Controllers\NodeController.cs" />
-    <Compile Include="Entities\Node.cs" />
+    <Compile Include="Controllers\MemoryAddressController.cs" />
+    <Compile Include="Controllers\RecordController.cs" />
+    <Compile Include="Entities\Block.cs" />
+    <Compile Include="Entities\MemoryAddress.cs" />
     <Compile Include="Entities\Record.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

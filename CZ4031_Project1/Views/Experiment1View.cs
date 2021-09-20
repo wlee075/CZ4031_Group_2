@@ -16,6 +16,7 @@ namespace CZ4031_Project1.Views
             Console.WriteLine("Please key in your selection: ");
             Console.WriteLine("1. Store the data from {0}", directory);
             Console.WriteLine("2. Show statistics");
+            Console.WriteLine("3. Print records");
             Console.WriteLine("3. Back to main page");
             Console.WriteLine("4. Exit");
 
@@ -30,9 +31,12 @@ namespace CZ4031_Project1.Views
                     controller.ShowStatistics();
                     break;
                 case "3":
-                    Views.MainView.Display();
+                    controller.PrintRecords();
                     break;
                 case "4":
+                    Views.MainView.Display();
+                    break;
+                case "5":
                     Environment.Exit(0);
                     break;
                 default:

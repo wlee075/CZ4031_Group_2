@@ -32,16 +32,16 @@ namespace CZ4031_Project1.Views
                    
                     break;
                 case "4":
-
+                    
                     break;
                 case "5":
                     Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Invalid selection, please try again.");
-                    Display();
                     break;
             }
+            Display();
         }
     }
 }

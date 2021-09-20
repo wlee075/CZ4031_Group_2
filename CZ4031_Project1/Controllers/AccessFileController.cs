@@ -65,7 +65,7 @@ namespace CZ4031_Project1.Controllers
                     string[] data = line.Split('\t');
                     Record r = new Record();
                     r.Tconst = data[0];
-                    r.AverageRating = float.Parse(data[1]);
+                    r.AverageRating = decimal.Parse(data[1]);
                     r.NumVotes = int.Parse(data[2]);
                     records.Add(r);
                     //Read the next line

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Entities
 {
-    public class Record
+    public class MemoryAddress
     {
-        public string Tconst { get; set; }
-        public decimal AverageRating { get; set; }
-        public int NumVotes { get; set; }
+        public byte[] Address { get; set; }
+        //public List<byte[]> Value { get; set; }
+        public string Value { get; set; }
     }
 }
