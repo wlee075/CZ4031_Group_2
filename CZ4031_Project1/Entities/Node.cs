@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Entities
 {
-    public class Block
+    public class Node
     {
-        public byte[] Address { get; set; }
-        public List<Node> Nodes { get; set; }
+        public string Key { get; set; }
+        public byte[] Pointer { get; set; }
     }
 }

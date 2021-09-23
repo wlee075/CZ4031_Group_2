@@ -50,6 +50,7 @@
     <Compile Include="Controllers\RecordController.cs" />
     <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\MemoryAddress.cs" />
+    <Compile Include="Entities\Node.cs" />
     <Compile Include="Entities\Record.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
