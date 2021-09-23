@@ -29,7 +29,10 @@ namespace CZ4031_Project1.Views
                     Views.Experiment2View.Display();
                     break;
                 case "3":
-                   
+                    while (true)
+                    {
+                        MemoryAddressController.GetNewAddress(20);
+                    }
                     break;
                 case "4":
                     
