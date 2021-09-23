@@ -13,7 +13,7 @@ namespace CZ4031_Project1.Controllers
         const int blockSize = 100;
         const int blockAddress = 8;
         double totalRecord = 0;
-        int recordSize = 0;
+       
         int availableSpace = blockSize - blockAddress;
 
         int tconstSize = 0;
@@ -42,7 +42,7 @@ namespace CZ4031_Project1.Controllers
             tconstSize = maxTconst;
             avgratingSize = maxAverageRating - 1; //Because of float
             numvoteSize = 4; //Integer size
-            recordSize = tconstSize + avgratingSize + numvoteSize;
+            RecordController.SetRecordSize(tconstSize, avgratingSize, numvoteSize);
             Console.WriteLine("Min length of tconst: {0}", minTconst);
             Console.WriteLine("Max length of tconst: {0}", maxTconst);
             Console.WriteLine("Max length of averageRating: {0}", minAverageRating);
@@ -66,18 +66,18 @@ namespace CZ4031_Project1.Controllers
         }
         private void SaveRecords(int tconst, int avgrating, int numvotes, List<Record> records)
         {
-            foreach(Record r in records)
+            int recordSize = (int)RecordController.GetRecordSize();
+            foreach (Record r in records)
             {
-                MemoryAddressController.InsertValueIntoMemory(r.Tconst, tconstSize);
-                MemoryAddressController.InsertValueIntoMemory(r.AverageRating.ToString(), avgratingSize);
-                MemoryAddressController.InsertValueIntoMemory(r.NumVotes.ToString(), numvoteSize);
+                MemoryAddressController.InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize, true);
             }
         }
        
      
         public void ShowStatistics()
         {
-            if(recordSize!=0)
+            int recordSize = (int)RecordController.GetRecordSize();
+            if (recordSize!=0)
             {
                 decimal blockOffsetSize = Convert.ToDecimal(GetBlockOffsetSize());
                 decimal recordsPerBlock = Convert.ToDecimal(availableSpace) / (recordSize + blockOffsetSize);

@@ -66,7 +66,7 @@ namespace CZ4031_Project1.Controllers
 
             }
         }
-        public static void InsertValueIntoMemory(string value, int size)
+        public static byte[] InsertValueIntoMemory(string value, int size, bool isRecord)
         {
             byte[] address = GetNewAddress(size);
             MemoryAddress memoryAddress = new MemoryAddress();
@@ -74,6 +74,12 @@ namespace CZ4031_Project1.Controllers
             memoryAddress.Address = address; 
             memoryAddress.Value = value;
             MemoryAddresses.Add(memoryAddress);
+            if (isRecord)
+            {
+                BlockController.InsertRecordIntoBlock(address);
+            }
+            Console.WriteLine("{0}---{1}", BitConverter.ToString(address), value);
+            return address;
         }
         public static List<MemoryAddress> GetAddresses()
         {
