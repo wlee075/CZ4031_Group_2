@@ -8,6 +8,7 @@ namespace CZ4031_Project1.Entities
 {
     public class Node
     {
+        public bool IS_LEAF;
         public string Key { get; set; }
         public byte[] Pointer { get; set; }
     }

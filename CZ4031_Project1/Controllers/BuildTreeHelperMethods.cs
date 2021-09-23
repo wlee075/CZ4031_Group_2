@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CZ4031_Project1.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,21 @@ namespace CZ4031_Project1.Controllers
 {
     class BuildTreeHelperMethods
     {
-        public void search(int key) { }
+        Block root;
+
+        public void search(int key) 
+        { 
+            //if tree empty
+            if (root.Nodes[key] == null)
+            {
+                Console.WriteLine("Tree is empty. ");
+            }
+            // traverse and fimd value
+            else
+            {
+                Node cursor = root.Nodes[key];
+            }
+        }
         public void insert(int key) { }
 
     }
