@@ -25,7 +25,7 @@ namespace CZ4031_Project1.Controllers
 
             //Check if block is full
             int numberOfRecords = block.Nodes.Count();
-            if (numberOfRecords >= GetRecordsPerBlock(RecordController.GetRecordSize()))
+            if (numberOfRecords >= GetRecordsPerBlock())
             {
                 block = AddBlock();
             }
@@ -76,9 +76,10 @@ namespace CZ4031_Project1.Controllers
         {
             return Blocks;
         }
-        public static double GetRecordsPerBlock(double recordsize)
+        public static double GetRecordsPerBlock()
         {
-            return BlockSize - BlockAddressSize / (recordsize + BlockOffsetSize);
+            double recordsize = RecordController.GetRecordSize();
+            return (BlockSize - BlockAddressSize) / (recordsize + BlockOffsetSize);
         }
     }
 }
