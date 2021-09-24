@@ -9,14 +9,18 @@ namespace CZ4031_Project1.Controllers
 {
     public class Experiment2Controller
     {
-        public void BuildBpTree()
+        public void insertInternal()
         {
-            // Read from original dataset
-            string fileName = "data.tsv";
-            string directory = MainController.GetMainDirectory() +  fileName;
-            AccessFileController afController = new AccessFileController(directory);
-
-           
+            
         }
+
+        public Node findParent(ref Node node, ref Node node2)
+        {
+            return null;
+        }
+
+
+
+        
     }
 }

@@ -23,7 +23,7 @@ namespace CZ4031_Project1.Views
             switch (input)
             {
                 case "1":
-                    controller.BuildBpTree();
+                   // controller.BuildBpTree();
                     break;
                 case "2":
                     
