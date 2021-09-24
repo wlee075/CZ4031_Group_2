@@ -12,7 +12,7 @@ namespace CZ4031_Project1.Controllers
         // key: record's numVotes, value: {Block addr, offset}
         public void insertRecordIntoTree(Block block, int key)
         {
-            Block cursor = block;
+            Block currBlock = block;
             Node currNode = new Node
             {
                 Pointer = block.Address
@@ -23,7 +23,7 @@ namespace CZ4031_Project1.Controllers
                 // create node in MM 
                 currNode.Key = key;
                 currNode.IS_LEAF = true; //is both root and leaf
-                cursor.Nodes.Add(currNode);
+                currBlock.Nodes.Add(currNode);
             }
             else
             {
@@ -36,15 +36,29 @@ namespace CZ4031_Project1.Controllers
                     parentNode = currNode;
                     parentNode.Pointer = currNode.Pointer;
 
-                    for (int i = 0; i < cursor.Nodes.Count; i++)
+                    for (int i = 0; i < currBlock.Nodes.Count; i++)
                     {
-                        //if key < current key, go to left pointer's node
-                        if (key < cursor.Nodes[i].Key)
-                        {
 
+                        currBlock.Pointer = currBlock.Address;
+
+                        //if key < current key, go to left pointer's block
+                        if (key < currBlock.Nodes[i].Key)
+                        {
+                            currBlock.Address = currBlock.Nodes[i].Pointer;     
+                            break;
+                        }
+
+                        // if key larger than all keys in block, go to last pointer's block
+                        if (i == currBlock.Nodes.Count - 1)
+                        {
+                            currBlock.Address = currBlock.Nodes[i+1].Pointer;
+                            break;
                         }
                     }
                 }
+
+                // reached leaf node, if space is available, find location to place it
+
             }
         }
     }
