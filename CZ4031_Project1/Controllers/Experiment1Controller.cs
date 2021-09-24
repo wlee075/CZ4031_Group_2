@@ -12,7 +12,7 @@ namespace CZ4031_Project1.Controllers
         string Directory = MainController.GetMainDirectory() + "data.tsv";
         const int blockSize = 100;
         const int blockAddress = 8;
-        double totalRecord = 0;
+
 
         int availableSpace = blockSize - blockAddress;
 
@@ -37,7 +37,7 @@ namespace CZ4031_Project1.Controllers
             int maxAverageRating = records.Select(z => z.AverageRating.ToString()).Max().Count();
             int minNumVotes = records.Select(z => z.NumVotes.ToString()).Min().Count();
             int maxNumVotes = records.Select(z => z.NumVotes.ToString()).Max().Count();
-            totalRecord = records.Count();
+            RecordController.TotalRecord = records.Count();
             //Save the size of each field
             tconstSize = maxTconst;
             avgratingSize = maxAverageRating - 1; //Because of float
@@ -57,7 +57,7 @@ namespace CZ4031_Project1.Controllers
             Console.WriteLine("Records stored");
             //Print memoryaddresses into textfile
             PrintMemoryAddresses();
-            Console.WriteLine("Total number of records: {0}", totalRecord);
+            Console.WriteLine("Total number of records: {0}", RecordController.TotalRecord);
 
         }
         public void PrintMemoryAddresses()
@@ -87,11 +87,11 @@ namespace CZ4031_Project1.Controllers
             int recordSize = (int)RecordController.GetRecordSize();
             if (recordSize != 0)
             {
-                decimal blockOffsetSize = Convert.ToDecimal(GetBlockOffsetSize());
+                decimal blockOffsetSize = Convert.ToDecimal(BlockController.GetBlockOffsetSize());
                 decimal recordsPerBlock = Convert.ToDecimal(availableSpace) / (recordSize + blockOffsetSize);
                 recordsPerBlock = Math.Floor(recordsPerBlock);
                 decimal blockHeaderSize = blockAddress + blockOffsetSize * recordsPerBlock;
-                decimal totalBlocks = Convert.ToDecimal(totalRecord) / recordsPerBlock;
+                decimal totalBlocks = Convert.ToDecimal(RecordController.TotalRecord) / recordsPerBlock;
                 totalBlocks = Math.Ceiling(totalBlocks);
                 decimal sizeOfDatabase = totalBlocks * blockSize;
                 Console.WriteLine("Record size: {0} bytes", recordSize);
@@ -106,19 +106,6 @@ namespace CZ4031_Project1.Controllers
             {
                 Console.WriteLine("Please store data first.");
             }
-        }
-        double GetBlockOffsetSize()
-        {
-            double count = 0;
-            double records = totalRecord;
-            while (records > 0)
-            {
-                double highestBit = Math.Pow(2, count);
-                records = records - highestBit;
-                count += 1;
-            }
-            // return bytes
-            return Math.Ceiling(count / 8);
         }
     }
 }

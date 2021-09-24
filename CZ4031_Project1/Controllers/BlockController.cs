@@ -11,7 +11,6 @@ namespace CZ4031_Project1.Controllers
     {
         public const int BlockSize = 100;
         public const int BlockAddressSize = 10;
-        private static double BlockOffsetSize { get; set; }
        // private static Dictionary<string, > RecordBlocks = new List<Block>();
         public static Block CurrentRecordBlock { get; set; }
  
@@ -22,6 +21,7 @@ namespace CZ4031_Project1.Controllers
             int blockOffsetSize = addresses.Last().Key.Length;
             int counter = 0;
             int recordsPerBlock = (int)GetRecordsPerBlock();
+            //Console.WriteLine(recordsPerBlock);
 
             while (counter < addresses.Count())
             {
@@ -59,11 +59,24 @@ namespace CZ4031_Project1.Controllers
             CurrentRecordBlock = newBlock;
             return newBlock;
         }
+        public static double GetBlockOffsetSize()
+        {
+            double count = 0;
+            double records = RecordController.TotalRecord;
+            while (records > 0)
+            {
+                double highestBit = Math.Pow(2, count);
+                records = records - highestBit;
+                count += 1;
+            }
+            // return bytes
+            return Math.Ceiling(count / 8);
+        }
 
         public static double GetRecordsPerBlock()
         {
             double recordsize = RecordController.GetRecordSize();
-            return (BlockSize - BlockAddressSize) / (recordsize + BlockOffsetSize);
+            return Math.Floor((BlockSize - BlockAddressSize) / (recordsize + GetBlockOffsetSize()));
         }
     }
 }
