@@ -30,32 +30,47 @@ namespace CZ4031_Project1.Controllers
             AccessFileController afController = new AccessFileController(Directory);
             List<Record> records = afController.ReadAndConvertToRecords();
 
-            //Get the minimum and maximum length of each fields
-            int minTconst = records.Select(z => z.Tconst).Min().Count();
-            int maxTconst = records.Select(z => z.Tconst).Max().Count();
-            int minAverageRating = records.Select(z => z.AverageRating.ToString()).Min().Count();
-            int maxAverageRating = records.Select(z => z.AverageRating.ToString()).Max().Count();
-            int minNumVotes = records.Select(z => z.NumVotes.ToString()).Min().Count();
-            int maxNumVotes = records.Select(z => z.NumVotes.ToString()).Max().Count();
-            totalRecord = records.Count();
-            //Save the size of each field
-            tconstSize = maxTconst;
-            avgratingSize = maxAverageRating - 1; //Because of float
-            numvoteSize = 4; //Integer size
-            RecordController.SetRecordSize(tconstSize, avgratingSize, numvoteSize);
-            Console.WriteLine("Min length of tconst: {0}", minTconst);
-            Console.WriteLine("Max length of tconst: {0}", maxTconst);
-            Console.WriteLine("Max length of averageRating: {0}", minAverageRating);
-            Console.WriteLine("Max length of averageRating: {0}", maxAverageRating);
-            Console.WriteLine("Max length of numVotes: {0}", minNumVotes);
-            Console.WriteLine("Max length of numVotes: {0}", maxNumVotes);
-            //Sort records by numVotes       
-            records = records.OrderBy(z => z.NumVotes).ToList();
-            //Saving records
-            Console.WriteLine("Storing records...");
-            SaveRecords(maxTconst, maxAverageRating - 1, 4, records);
-            Console.WriteLine("Records stored");
-            Console.WriteLine("Total number of records: {0}", totalRecord);    
+            try
+            {
+                if (records == null)
+                {
+                    throw new Exception("Data not stored");
+                }
+                else
+                {
+                    //Get the minimum and maximum length of each fields
+                    int minTconst = records.Select(z => z.Tconst).Min().Count();
+                    int maxTconst = records.Select(z => z.Tconst).Max().Count();
+                    int minAverageRating = records.Select(z => z.AverageRating.ToString()).Min().Count();
+                    int maxAverageRating = records.Select(z => z.AverageRating.ToString()).Max().Count();
+                    int minNumVotes = records.Select(z => z.NumVotes.ToString()).Min().Count();
+                    int maxNumVotes = records.Select(z => z.NumVotes.ToString()).Max().Count();
+                    totalRecord = records.Count();
+                    //Save the size of each field
+                    tconstSize = maxTconst;
+                    avgratingSize = maxAverageRating - 1; //Because of float
+                    numvoteSize = 4; //Integer size
+                    RecordController.SetRecordSize(tconstSize, avgratingSize, numvoteSize);
+                    Console.WriteLine("Min length of tconst: {0}", minTconst);
+                    Console.WriteLine("Max length of tconst: {0}", maxTconst);
+                    Console.WriteLine("Max length of averageRating: {0}", minAverageRating);
+                    Console.WriteLine("Max length of averageRating: {0}", maxAverageRating);
+                    Console.WriteLine("Max length of numVotes: {0}", minNumVotes);
+                    Console.WriteLine("Max length of numVotes: {0}", maxNumVotes);
+                    //Sort records by numVotes       
+                    records = records.OrderBy(z => z.NumVotes).ToList();
+                    //Saving records
+                    Console.WriteLine("Storing records...");
+                    SaveRecords(maxTconst, maxAverageRating - 1, 4, records);
+                    Console.WriteLine("Records stored");
+                    Console.WriteLine("Total number of records: {0}", totalRecord);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data not stored");
+            }
+            
         }
         public void PrintRecords()
         {
