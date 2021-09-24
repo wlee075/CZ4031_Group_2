@@ -19,6 +19,7 @@ namespace CZ4031_Project1.Controllers
         public static void InsertBlockIntoMemory()
         {
             var addresses = MemoryAddressController.GetAddresses().ToArray();
+            int blockOffsetSize = addresses.Last().Key.Length;
             int counter = 0;
             int recordsPerBlock = (int)GetRecordsPerBlock();
 
@@ -33,7 +34,7 @@ namespace CZ4031_Project1.Controllers
                 node.Key = Convert.ToInt32(addresses[counter].Value.Split('-')[1]);
                 node.Pointer = addresses[counter].Key;
                 CurrentRecordBlock.Nodes.Add(node);
-                MemoryAddressController.InsertValueIntoMemory(BitConverter.ToString(node.Pointer), node.Pointer.Length);
+                MemoryAddressController.InsertValueIntoMemory(BitConverter.ToString(node.Pointer), blockOffsetSize);
                
                 counter += 1;
             }
