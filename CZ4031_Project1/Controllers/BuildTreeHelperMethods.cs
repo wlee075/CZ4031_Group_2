@@ -10,9 +10,9 @@ namespace CZ4031_Project1.Controllers
     class BuildTreeHelperMethods
     {
         // key: record's numVotes, value: {Block addr, offset}
-        public void insertRecordIntoTree(Block block, int key)
+        public void insertRecordIntoTree(Block block, int key, BPlusTree tree)
         {
-            Block cursor = block;
+            Block currBlock = block;
             Node currNode = new Node
             {
                 Pointer = block.Address
@@ -23,7 +23,7 @@ namespace CZ4031_Project1.Controllers
                 // create node in MM 
                 currNode.Key = key;
                 currNode.IS_LEAF = true; //is both root and leaf
-                cursor.Nodes.Add(currNode);
+                currBlock.Nodes.Add(currNode);
             }
             else
             {
@@ -36,18 +36,15 @@ namespace CZ4031_Project1.Controllers
                     // set parent node and its address
                     parentNode = currNode;
                     parentNode.Pointer = currNode.Pointer;
-
-<<<<<<< HEAD
                     for (int i = 0; i < currBlock.numNodes; i++)
-=======
-                    for (int i = 0; i < cursor.Nodes.Count; i++)
->>>>>>> 73377391583e174ba0b6bbefb6cd848c615c84f6
                     {
                         //if key < current key, go to left pointer's node
-                        if (key < cursor.Nodes[i].Key)
+                        if (key < currBlock.Nodes[i].Key)
                         {
+                            currBlock.Address = currBlock.Nodes[i].Pointer;
+                            break;
+                        }
 
-<<<<<<< HEAD
                         // if key larger than all keys in block, go to last pointer's block
                         if (i == currBlock.numNodes - 1)
                         {
@@ -92,11 +89,7 @@ namespace CZ4031_Project1.Controllers
                 {
 
                 }
-=======
-                        }
-                    }
-                }
->>>>>>> 73377391583e174ba0b6bbefb6cd848c615c84f6
+
             }
         }
 
@@ -127,22 +120,6 @@ namespace CZ4031_Project1.Controllers
         public void GetNumNodes(ref Block currentBlock)
         {
             currentBlock.numNodes = currentBlock.Nodes.Count();
-        }
-
-        public void setMaxKeys(int blockSize, int blockAddressSize, ref Block currBlock)
-        {
-            byte[] memory = currBlock.Address;
-            // Get size left for keys and pointers in a node after accounting for node's isLeaf attribute.
-            int nodeBufferSize = blockSize - sizeof(bool);
-            int maxKeys = 0;
-            
-            // Try to fit as many pointer key pairs as possible into the node block.
-            while (blockAddressSize + sizeof(int) <= nodeBufferSize)
-            {
-                sum += (blockAddressSize + sizeof(int));
-                maxKeys += 1;
-            }
-            currBlock.MaxKeys = maxKeys;
         }
 
         public void SetChildBlocksNumber(ref Block currentBlock)
