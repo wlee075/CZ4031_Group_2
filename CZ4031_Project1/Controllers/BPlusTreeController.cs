@@ -34,13 +34,11 @@ namespace CZ4031_Project1.Controllers
             int levels = 1;
 
             List<Node> nodes = tree.Blocks.Where(i => i.Address == tree.rootAddress).Select(j => j.Nodes).FirstOrDefault();
-            Node currentNode = new Node();
             try
             {
                 for (int i = 0; i < nodes.Count; i++)
                 {
-                    currentNode = nodes[i];
-                    if (!currentNode.IS_LEAF)
+                    if (!nodes[i].IS_LEAF)
                     {
                         levels++;
                     }

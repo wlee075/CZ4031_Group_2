@@ -31,13 +31,14 @@ namespace CZ4031_Project1.Controllers
                 // traverse nodes to find proper place to insert key
                 Node parentNode = new Node();
                 parentNode.Pointer = block.Address;
+                GetNumNodes(ref currBlock);
                 while (!currNode.IS_LEAF)
                 {
                     // set parent node and its address
                     parentNode = currNode;
                     parentNode.Pointer = currNode.Pointer;
 
-                    for (int i = 0; i < currBlock.Nodes.Count; i++)
+                    for (int i = 0; i < currBlock.numNodes; i++)
                     {
 
                         currBlock.Pointer = currBlock.Address;
@@ -50,7 +51,7 @@ namespace CZ4031_Project1.Controllers
                         }
 
                         // if key larger than all keys in block, go to last pointer's block
-                        if (i == currBlock.Nodes.Count - 1)
+                        if (i == currBlock.numNodes - 1)
                         {
                             currBlock.Address = currBlock.Nodes[i+1].Pointer;
                             break;
@@ -59,25 +60,25 @@ namespace CZ4031_Project1.Controllers
                 }
 
                 // reached leaf node, if space is available, find location to place it
-                if (currBlock.Nodes.Count < tree.MaxKeys)
+                if (currBlock.numNodes < tree.MaxKeys)
                 {
                     int i = 0;
 
                     // Iterate through the parent to see where to put in the lower bound key for the new child.
-                    while (key > currBlock.Nodes[i].Key && i < currBlock.Nodes.Count)
+                    while (key > currBlock.Nodes[i].Key && i < currBlock.numNodes)
                     {
                         i++;
                     }
 
                     // Now we have i, the index to insert the key in. Bubble swap all keys back to insert the new child's key.
                     // We use numKeys as index since we are going to be inserting a new key.
-                    for (int j = currBlock.Nodes.Count; j > i; j--)
+                    for (int j = currBlock.numNodes; j > i; j--)
                     {
                         currBlock.Nodes[j].Key = currBlock.Nodes[j - 1].Key;
                     }
 
                     // Shift all pointers one step right (right pointer of key points to lower bound of key).
-                    for (int j = currBlock.Nodes.Count + 1; j > i + 1; j--)
+                    for (int j = currBlock.numNodes + 1; j > i + 1; j--)
                     {
                         currBlock.Nodes[j].Pointer = currBlock.Nodes[j - 1].Pointer;
                     }
@@ -95,5 +96,58 @@ namespace CZ4031_Project1.Controllers
                 }
             }
         }
+
+        public void SplitChild(ref Block currBlock)
+        {
+            int x, i, j, numberOfPointers;
+            GetNumNodes(ref currBlock);
+            numberOfPointers = currBlock.numNodes + 1;
+            //split the greater half to the left when numberOfPointer is odd
+            //else split equal equal when numberOfPointer is even
+            if (numberOfPointers % 2 == 0)
+                x = (numberOfPointers + 1) / 2;
+            else x = numberOfPointers / 2;
+
+            //we don't declare another block for leftBlock, rather re-use curBlock as leftBlock and
+            //take away the right half values to the rightBlock
+            Block rightBlock = new Block();
+
+            //so leftBlock has x number of nodes
+            currBlock.numNodes = x;
+            //and rightBlock has numberOfPointers-x
+            rightBlock.numNodes = numberOfPointers - x;
+            //so both of them have their common parent [even parent may be null, so both of them will have null parent]
+            rightBlock.Address = currBlock.Address;
+
+        }
+
+        public void GetNumNodes(ref Block currentBlock)
+        {
+            currentBlock.numNodes = currentBlock.Nodes.Count();
+        }
+
+        public void setMaxKeys(int blockSize, int blockAddressSize, ref Block currBlock)
+        {
+            byte[] memory = currBlock.Address;
+            // Get size left for keys and pointers in a node after accounting for node's isLeaf attribute.
+            int nodeBufferSize = blockSize - sizeof(bool);
+            int maxKeys = 0;
+            
+            // Try to fit as many pointer key pairs as possible into the node block.
+            while (blockAddressSize + sizeof(int) <= nodeBufferSize)
+            {
+                sum += (blockAddressSize + sizeof(int));
+                maxKeys += 1;
+            }
+            currBlock.MaxKeys = maxKeys;
+        }
+
+        public void SetChildBlocksNumber(ref Block currentBlock)
+        {
+            currentBlock.MaxKeys = 3;
+            currentBlock.Nodes = new List<Node>(currentBlock.MaxKeys);
+        }
+
+
     }
 }

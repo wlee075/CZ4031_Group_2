@@ -9,10 +9,10 @@ namespace CZ4031_Project1.Controllers
 {
     public class Experiment2Controller
     {
-       
+
+      
 
 
 
-        
     }
 }
