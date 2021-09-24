@@ -12,7 +12,7 @@ namespace CZ4031_Project1.Controllers
         // Memory Address Byte Indexes 0x[0][1][2][3][4]
         private static byte[] Address { get; set; }
         private static int AddressSize { get; set; }
-        private static List<MemoryAddress> MemoryAddresses = new List<MemoryAddress>();
+        private static Dictionary<byte[], string> MemoryAddresses = new Dictionary<byte[], string>();
 
         public static byte[] GetNewAddress(int size)
         {
@@ -69,19 +69,16 @@ namespace CZ4031_Project1.Controllers
         public static byte[] InsertValueIntoMemory(string value, int size, bool isRecord)
         {
             byte[] address = GetNewAddress(size);
-            MemoryAddress memoryAddress = new MemoryAddress();
-            memoryAddress.Address = new byte[AddressSize];
-            memoryAddress.Address = address; 
-            memoryAddress.Value = value;
-            MemoryAddresses.Add(memoryAddress);
+
+            MemoryAddresses[address] = value;
             if (isRecord)
             {
-                BlockController.InsertRecordIntoBlock(address);
+                BlockController.InsertIntoRecordBlock(address);
             }
-            Console.WriteLine("{0}---{1}", BitConverter.ToString(address), value);
+           // Console.WriteLine("{0}---{1}", BitConverter.ToString(address), MemoryAddresses[address]);
             return address;
         }
-        public static List<MemoryAddress> GetAddresses()
+        public static Dictionary<byte[],string> GetAddresses()
         {
             return MemoryAddresses;
         }

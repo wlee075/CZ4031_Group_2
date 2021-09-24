@@ -86,6 +86,7 @@ namespace CZ4031_Project1.Controllers
         }
         public void Write(List<string> lines)
         {
+            Console.WriteLine("Writing to {0}...", Directory);
             try
             {
                 //Pass the filepath and filename to the StreamWriter Constructor
@@ -107,7 +108,7 @@ namespace CZ4031_Project1.Controllers
             }
             finally
             {
-                Console.WriteLine("Executing finally block.");
+                Console.WriteLine("Writing to {0} complete");
             }
         }
     }

@@ -12,49 +12,47 @@ namespace CZ4031_Project1.Controllers
         public const int BlockSize = 100;
         public const int BlockAddressSize = 10;
         private static double BlockOffsetSize { get; set; }
-        private static List<Block> Blocks = new List<Block>();
-        public static void InsertRecordIntoBlock(byte[] pointer)
+       // private static Dictionary<string, > RecordBlocks = new List<Block>();
+        public static Block CurrentRecordBlock { get; set; }
+        public static void InsertIntoRecordBlock(byte[] pointer)
         {
-            //Select block that store records only
-            Block block = Blocks.Where(z => z.IsRecord == true).LastOrDefault();
             //If there are no blocks
-            if (block == null)
+            if (CurrentRecordBlock == null)
             {
-                block = AddBlock();
+                CurrentRecordBlock = AddBlock();
             }
 
             //Check if block is full
-            int numberOfRecords = block.Nodes.Count();
+            int numberOfRecords = CurrentRecordBlock.Nodes.Count();
             if (numberOfRecords >= GetRecordsPerBlock())
             {
-                block = AddBlock();
+                CurrentRecordBlock = AddBlock();
             }
 
             Node node = new Node();
             node.IS_LEAF = true;
             //node.Key = key;
             node.Pointer = pointer;
-            block.Nodes.Add(node);
+            CurrentRecordBlock.Nodes.Add(node);
 
         }
         private static Block AddBlock()
         {
-            Block lastBlock = Blocks.Where(z => z.IsRecord == true).LastOrDefault();
-            Block block = new Block();
-            if (lastBlock == null)
+            if (CurrentRecordBlock == null)
             {
-                block.Id = "block1";
+                CurrentRecordBlock = new Block();
+                CurrentRecordBlock.Id = "block1";
             }
             else
             {
                 //Increase id by 1
-                block.Id = String.Format("block{0}", Convert.ToInt32(lastBlock.Id.Replace("block", "")) + 1);
+                CurrentRecordBlock.Id = String.Format("block{0}", Convert.ToInt32(CurrentRecordBlock.Id.Replace("block", "")) + 1);
             }
-            block.IsRecord = true;
-            block.Address = MemoryAddressController.InsertValueIntoMemory(block.Id, BlockAddressSize, false);
-            block.Nodes = new List<Node>();
-            Blocks.Add(block);
-            return block;
+            CurrentRecordBlock.IsRecord = true;
+            CurrentRecordBlock.Address = MemoryAddressController.InsertValueIntoMemory(CurrentRecordBlock.Id, BlockAddressSize, false);
+            CurrentRecordBlock.Nodes = new List<Node>();
+            //Blocks.Add(block);
+            return CurrentRecordBlock;
         }
         public static double GetBlockOffsetSize(double recordsize, double totalrecord)
         {
@@ -72,10 +70,10 @@ namespace CZ4031_Project1.Controllers
             return BlockOffsetSize;
         }
 
-        public static List<Block> GetBlocks()
-        {
-            return Blocks;
-        }
+        //public static List<Block> GetBlocks()
+        //{
+        //    //return Blocks;
+        //}
         public static double GetRecordsPerBlock()
         {
             double recordsize = RecordController.GetRecordSize();
