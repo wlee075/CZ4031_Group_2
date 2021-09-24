@@ -13,7 +13,7 @@ namespace CZ4031_Project1.Controllers
         const int blockSize = 100;
         const int blockAddress = 8;
         double totalRecord = 0;
-       
+
         int availableSpace = blockSize - blockAddress;
 
         int tconstSize = 0;
@@ -30,54 +30,42 @@ namespace CZ4031_Project1.Controllers
             AccessFileController afController = new AccessFileController(Directory);
             List<Record> records = afController.ReadAndConvertToRecords();
 
-            try
-            {
-                if (records == null)
-                {
-                    throw new Exception("Data not stored");
-                }
-                else
-                {
-                    //Get the minimum and maximum length of each fields
-                    int minTconst = records.Select(z => z.Tconst).Min().Count();
-                    int maxTconst = records.Select(z => z.Tconst).Max().Count();
-                    int minAverageRating = records.Select(z => z.AverageRating.ToString()).Min().Count();
-                    int maxAverageRating = records.Select(z => z.AverageRating.ToString()).Max().Count();
-                    int minNumVotes = records.Select(z => z.NumVotes.ToString()).Min().Count();
-                    int maxNumVotes = records.Select(z => z.NumVotes.ToString()).Max().Count();
-                    totalRecord = records.Count();
-                    //Save the size of each field
-                    tconstSize = maxTconst;
-                    avgratingSize = maxAverageRating - 1; //Because of float
-                    numvoteSize = 4; //Integer size
-                    RecordController.SetRecordSize(tconstSize, avgratingSize, numvoteSize);
-                    Console.WriteLine("Min length of tconst: {0}", minTconst);
-                    Console.WriteLine("Max length of tconst: {0}", maxTconst);
-                    Console.WriteLine("Max length of averageRating: {0}", minAverageRating);
-                    Console.WriteLine("Max length of averageRating: {0}", maxAverageRating);
-                    Console.WriteLine("Max length of numVotes: {0}", minNumVotes);
-                    Console.WriteLine("Max length of numVotes: {0}", maxNumVotes);
-                    //Sort records by numVotes       
-                    records = records.OrderBy(z => z.NumVotes).ToList();
-                    //Saving records
-                    Console.WriteLine("Storing records...");
-                    SaveRecords(maxTconst, maxAverageRating - 1, 4, records);
-                    Console.WriteLine("Records stored");
-                    Console.WriteLine("Total number of records: {0}", totalRecord);
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Data not stored");
-            }
-            
+            //Get the minimum and maximum length of each fields
+            int minTconst = records.Select(z => z.Tconst).Min().Count();
+            int maxTconst = records.Select(z => z.Tconst).Max().Count();
+            int minAverageRating = records.Select(z => z.AverageRating.ToString()).Min().Count();
+            int maxAverageRating = records.Select(z => z.AverageRating.ToString()).Max().Count();
+            int minNumVotes = records.Select(z => z.NumVotes.ToString()).Min().Count();
+            int maxNumVotes = records.Select(z => z.NumVotes.ToString()).Max().Count();
+            totalRecord = records.Count();
+            //Save the size of each field
+            tconstSize = maxTconst;
+            avgratingSize = maxAverageRating - 1; //Because of float
+            numvoteSize = 4; //Integer size
+            RecordController.SetRecordSize(tconstSize, avgratingSize, numvoteSize);
+            Console.WriteLine("Min length of tconst: {0}", minTconst);
+            Console.WriteLine("Max length of tconst: {0}", maxTconst);
+            Console.WriteLine("Max length of averageRating: {0}", minAverageRating);
+            Console.WriteLine("Max length of averageRating: {0}", maxAverageRating);
+            Console.WriteLine("Max length of numVotes: {0}", minNumVotes);
+            Console.WriteLine("Max length of numVotes: {0}", maxNumVotes);
+            //Sort records by numVotes       
+            records = records.OrderBy(z => z.NumVotes).ToList();
+            //Saving records
+            Console.WriteLine("Storing records...");
+            SaveRecords(maxTconst, maxAverageRating - 1, 4, records);
+            Console.WriteLine("Records stored");
+            //Print memoryaddresses into textfile
+            PrintMemoryAddresses();
+            Console.WriteLine("Total number of records: {0}", totalRecord);
+
         }
-        public void PrintRecords()
+        public void PrintMemoryAddresses()
         {
             List<string> lines = new List<string>();
             foreach (var memoryaddress in MemoryAddressController.GetAddresses())
             {
-                lines.Add(String.Format("{0}: {1}",BitConverter.ToString(memoryaddress.Key), memoryaddress.Value));
+                lines.Add(String.Format("{0}: {1}", BitConverter.ToString(memoryaddress.Key), memoryaddress.Value));
             }
             AccessFileController afcontroller = new AccessFileController(MainController.GetMainDirectory() + "experiment1_stored_data.txt");
             afcontroller.Write(lines);
@@ -87,15 +75,17 @@ namespace CZ4031_Project1.Controllers
             int recordSize = (int)RecordController.GetRecordSize();
             foreach (Record r in records)
             {
-                MemoryAddressController.InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize, true);
+                MemoryAddressController.InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
             }
+
+            BlockController.InsertBlockIntoMemory();
         }
-       
-     
+
+
         public void ShowStatistics()
         {
             int recordSize = (int)RecordController.GetRecordSize();
-            if (recordSize!=0)
+            if (recordSize != 0)
             {
                 decimal blockOffsetSize = Convert.ToDecimal(GetBlockOffsetSize());
                 decimal recordsPerBlock = Convert.ToDecimal(availableSpace) / (recordSize + blockOffsetSize);
@@ -121,14 +111,14 @@ namespace CZ4031_Project1.Controllers
         {
             double count = 0;
             double records = totalRecord;
-            while(records > 0)
+            while (records > 0)
             {
-               double highestBit =  Math.Pow(2, count);
+                double highestBit = Math.Pow(2, count);
                 records = records - highestBit;
                 count += 1;
             }
             // return bytes
-            return Math.Ceiling(count/8);
+            return Math.Ceiling(count / 8);
         }
     }
 }

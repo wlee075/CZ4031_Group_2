@@ -66,15 +66,11 @@ namespace CZ4031_Project1.Controllers
 
             }
         }
-        public static byte[] InsertValueIntoMemory(string value, int size, bool isRecord)
+        public static byte[] InsertValueIntoMemory(string value, int size)
         {
             byte[] address = GetNewAddress(size);
 
             MemoryAddresses[address] = value;
-            if (isRecord)
-            {
-                BlockController.InsertIntoRecordBlock(address);
-            }
            // Console.WriteLine("{0}---{1}", BitConverter.ToString(address), MemoryAddresses[address]);
             return address;
         }
