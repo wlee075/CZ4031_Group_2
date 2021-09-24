@@ -10,9 +10,9 @@ namespace CZ4031_Project1.Controllers
     class BuildTreeHelperMethods
     {
         // key: record's numVotes, value: {Block addr, offset}
-        public void insertRecordIntoTree(BPlusTree tree, Block block, int key)
+        public void insertRecordIntoTree(Block block, int key)
         {
-            Block currBlock = block;
+            Block cursor = block;
             Node currNode = new Node
             {
                 Pointer = block.Address
@@ -23,8 +23,7 @@ namespace CZ4031_Project1.Controllers
                 // create node in MM 
                 currNode.Key = key;
                 currNode.IS_LEAF = true; //is both root and leaf
-                currBlock.Nodes.Add(currNode);
-                tree.Blocks.Add(currBlock);
+                cursor.Nodes.Add(currNode);
             }
             else
             {
@@ -38,18 +37,17 @@ namespace CZ4031_Project1.Controllers
                     parentNode = currNode;
                     parentNode.Pointer = currNode.Pointer;
 
+<<<<<<< HEAD
                     for (int i = 0; i < currBlock.numNodes; i++)
+=======
+                    for (int i = 0; i < cursor.Nodes.Count; i++)
+>>>>>>> 73377391583e174ba0b6bbefb6cd848c615c84f6
                     {
-
-                        currBlock.Pointer = currBlock.Address;
-
-                        //if key < current key, go to left pointer's block
-                        if (key < currBlock.Nodes[i].Key)
+                        //if key < current key, go to left pointer's node
+                        if (key < cursor.Nodes[i].Key)
                         {
-                            currBlock.Address = currBlock.Nodes[i].Pointer;     
-                            break;
-                        }
 
+<<<<<<< HEAD
                         // if key larger than all keys in block, go to last pointer's block
                         if (i == currBlock.numNodes - 1)
                         {
@@ -94,6 +92,11 @@ namespace CZ4031_Project1.Controllers
                 {
 
                 }
+=======
+                        }
+                    }
+                }
+>>>>>>> 73377391583e174ba0b6bbefb6cd848c615c84f6
             }
         }
 

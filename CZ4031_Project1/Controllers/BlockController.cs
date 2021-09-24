@@ -11,73 +11,72 @@ namespace CZ4031_Project1.Controllers
     {
         public const int BlockSize = 100;
         public const int BlockAddressSize = 10;
-        private static double BlockOffsetSize { get; set; }
        // private static Dictionary<string, > RecordBlocks = new List<Block>();
         public static Block CurrentRecordBlock { get; set; }
-        public static void InsertIntoRecordBlock(byte[] pointer)
+ 
+
+        public static void InsertBlockIntoMemory()
         {
-            //If there are no blocks
-            if (CurrentRecordBlock == null)
+            var addresses = MemoryAddressController.GetAddresses().ToArray();
+            int blockOffsetSize = addresses.Last().Key.Length;
+            int counter = 0;
+            int recordsPerBlock = (int)GetRecordsPerBlock();
+            //Console.WriteLine(recordsPerBlock);
+
+            while (counter < addresses.Count())
             {
-                CurrentRecordBlock = AddBlock();
+                if(counter % recordsPerBlock == 0)
+                {
+                    CurrentRecordBlock = CreateBlock();
+                }
+ 
+                Node node = new Node();
+                node.Key = Convert.ToInt32(addresses[counter].Value.Split('-')[1]);
+                node.Pointer = addresses[counter].Key;
+                CurrentRecordBlock.Nodes.Add(node);
+                MemoryAddressController.InsertValueIntoMemory(BitConverter.ToString(node.Pointer), blockOffsetSize);
+               
+                counter += 1;
             }
-
-            //Check if block is full
-            int numberOfRecords = CurrentRecordBlock.Nodes.Count();
-            if (numberOfRecords >= GetRecordsPerBlock())
-            {
-                CurrentRecordBlock = AddBlock();
-            }
-
-            Node node = new Node();
-            node.IS_LEAF = true;
-            //node.Key = key;
-            node.Pointer = pointer;
-            CurrentRecordBlock.Nodes.Add(node);
-
         }
-        private static Block AddBlock()
+        public static Block CreateBlock()
         {
+            Block newBlock = new Block();
+            //If there are no blocks
+
             if (CurrentRecordBlock == null)
             {
-                CurrentRecordBlock = new Block();
-                CurrentRecordBlock.Id = "block1";
+                newBlock = new Block();
+                newBlock.Id = "block1";
             }
             else
             {
                 //Increase id by 1
-                CurrentRecordBlock.Id = String.Format("block{0}", Convert.ToInt32(CurrentRecordBlock.Id.Replace("block", "")) + 1);
+                newBlock.Id = String.Format("block{0}", Convert.ToInt32(CurrentRecordBlock.Id.Replace("block", "")) + 1);
             }
-            CurrentRecordBlock.IsRecord = true;
-            CurrentRecordBlock.Address = MemoryAddressController.InsertValueIntoMemory(CurrentRecordBlock.Id, BlockAddressSize, false);
-            CurrentRecordBlock.Nodes = new List<Node>();
-            //Blocks.Add(block);
-            return CurrentRecordBlock;
+            newBlock.Address = MemoryAddressController.InsertValueIntoMemory(newBlock.Id, BlockAddressSize);
+            newBlock.Nodes = new List<Node>();
+            CurrentRecordBlock = newBlock;
+            return newBlock;
         }
-        public static double GetBlockOffsetSize(double recordsize, double totalrecord)
+        public static double GetBlockOffsetSize()
         {
             double count = 0;
-            double records = totalrecord;
-            double totalrecordsize = recordsize * totalrecord;
-            while (totalrecordsize > 0)
+            double records = RecordController.TotalRecord;
+            while (records > 0)
             {
                 double highestBit = Math.Pow(2, count);
-                totalrecordsize = totalrecordsize - highestBit;
+                records = records - highestBit;
                 count += 1;
             }
             // return bytes
-            BlockOffsetSize = Math.Ceiling(count / 8);
-            return BlockOffsetSize;
+            return Math.Ceiling(count / 8);
         }
 
-        //public static List<Block> GetBlocks()
-        //{
-        //    //return Blocks;
-        //}
         public static double GetRecordsPerBlock()
         {
             double recordsize = RecordController.GetRecordSize();
-            return (BlockSize - BlockAddressSize) / (recordsize + BlockOffsetSize);
+            return Math.Floor((BlockSize - BlockAddressSize) / (recordsize + GetBlockOffsetSize()));
         }
     }
 }

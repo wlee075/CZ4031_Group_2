@@ -9,10 +9,15 @@ namespace CZ4031_Project1.Controllers
 {
     public class Experiment2Controller
     {
+        public void insertInternal()
+        {
+            
+        }
 
-      
-
-
+        public Node findParent(ref Node node, ref Node node2)
+        {
+            return null;
+        }
 
     }
 }

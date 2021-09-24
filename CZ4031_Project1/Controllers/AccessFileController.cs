@@ -108,7 +108,7 @@ namespace CZ4031_Project1.Controllers
             }
             finally
             {
-                Console.WriteLine("Writing to {0} complete");
+                Console.WriteLine("Writing to {0} complete", Directory);
             }
         }
     }
