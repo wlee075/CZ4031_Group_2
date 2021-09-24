@@ -10,7 +10,7 @@ namespace CZ4031_Project1.Controllers
     class BuildTreeHelperMethods
     {
         // key: record's numVotes, value: {Block addr, offset}
-        public void insertRecordIntoTree(Block block, int key)
+        public void insertRecordIntoTree(BPlusTree tree, Block block, int key)
         {
             Block currBlock = block;
             Node currNode = new Node
@@ -24,6 +24,7 @@ namespace CZ4031_Project1.Controllers
                 currNode.Key = key;
                 currNode.IS_LEAF = true; //is both root and leaf
                 currBlock.Nodes.Add(currNode);
+                tree.Blocks.Add(currBlock);
             }
             else
             {
@@ -58,7 +59,40 @@ namespace CZ4031_Project1.Controllers
                 }
 
                 // reached leaf node, if space is available, find location to place it
+                if (currBlock.Nodes.Count < tree.MaxKeys)
+                {
+                    int i = 0;
 
+                    // Iterate through the parent to see where to put in the lower bound key for the new child.
+                    while (key > currBlock.Nodes[i].Key && i < currBlock.Nodes.Count)
+                    {
+                        i++;
+                    }
+
+                    // Now we have i, the index to insert the key in. Bubble swap all keys back to insert the new child's key.
+                    // We use numKeys as index since we are going to be inserting a new key.
+                    for (int j = currBlock.Nodes.Count; j > i; j--)
+                    {
+                        currBlock.Nodes[j].Key = currBlock.Nodes[j - 1].Key;
+                    }
+
+                    // Shift all pointers one step right (right pointer of key points to lower bound of key).
+                    for (int j = currBlock.Nodes.Count + 1; j > i + 1; j--)
+                    {
+                        currBlock.Nodes[j].Pointer = currBlock.Nodes[j - 1].Pointer;
+                    }
+
+                    // Add in new child's lower bound key and pointer to the parent.
+                    currBlock.Nodes[i].Key = key;
+
+                    // Right side pointer of key of parent will point to the new child node.
+                    currBlock.Nodes[i + 1].Pointer = currBlock.Address;
+                }
+                // If parent node doesn't have space, we need to recursively split parent node and insert more parent nodes.
+                else
+                {
+
+                }
             }
         }
     }
