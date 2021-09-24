@@ -11,6 +11,8 @@ namespace CZ4031_Project1.Entities
         public bool IsRecord { get; set; }
         public string Id { get; set; }
         public byte[] Address { get; set; }
+        public byte[] Pointer { get; set; }
         public List<Node> Nodes { get; set; }
+
     }
 }
