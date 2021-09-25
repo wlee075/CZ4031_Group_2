@@ -1,14 +1,21 @@
 ﻿using CZ4031_Project1.Controllers;
+using CZ4031_Project1.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Views
 {
     public static class Experiment2View
     {
+
+
         static Experiment2Controller controller = new Experiment2Controller();
         public static void Display()
         {
@@ -23,7 +30,13 @@ namespace CZ4031_Project1.Views
             switch (input)
             {
                 case "1":
-                   // controller.BuildBpTree();
+                    Dictionary<byte[], string> addresses = MemoryAddressController.GetAddresses();
+                    Block block = new Block();
+                   // foreach (var address in addresses){
+                   //   if(block.Address.GetValue)
+                   // }
+
+
                     break;
                 case "2":
                     
