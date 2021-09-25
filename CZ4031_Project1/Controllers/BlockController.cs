@@ -11,7 +11,7 @@ namespace CZ4031_Project1.Controllers
     {
         public const int BlockSize = 100;
         public const int BlockAddressSize = 10;
-       // private static Dictionary<string, > RecordBlocks = new List<Block>();
+        public static Dictionary<byte[], Block> Blocks = new Dictionary<byte[], Block>();
         public static Block CurrentRecordBlock { get; set; }
  
 
@@ -25,11 +25,13 @@ namespace CZ4031_Project1.Controllers
 
             while (counter < addresses.Count())
             {
+                //Number of records per block do not exceed
                 if(counter % recordsPerBlock == 0)
                 {
                     CurrentRecordBlock = CreateBlock();
                 }
- 
+                
+                //Store records into block
                 Node node = new Node();
                 node.Key = Convert.ToInt32(addresses[counter].Value.Split('-')[1]);
                 node.Pointer = addresses[counter].Key;
@@ -42,11 +44,10 @@ namespace CZ4031_Project1.Controllers
         public static Block CreateBlock()
         {
             Block newBlock = new Block();
-            //If there are no blocks
 
+            //If there are no blocks
             if (CurrentRecordBlock == null)
             {
-                newBlock = new Block();
                 newBlock.Id = "block1";
             }
             else
@@ -56,7 +57,9 @@ namespace CZ4031_Project1.Controllers
             }
             newBlock.Address = MemoryAddressController.InsertValueIntoMemory(newBlock.Id, BlockAddressSize);
             newBlock.Nodes = new List<Node>();
+            newBlock.IsRecordBlock = true;
             CurrentRecordBlock = newBlock;
+            Blocks[newBlock.Address] = newBlock;
             return newBlock;
         }
         public static double GetBlockOffsetSize()

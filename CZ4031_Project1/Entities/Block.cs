@@ -8,7 +8,7 @@ namespace CZ4031_Project1.Entities
 {
     public class Block
     {
-        public bool IsRecord { get; set; }
+        public bool IsRecordBlock { get; set; }
         public int MaxKeys { get; set; }
         public int numNodes { get; set; }
         public string Id { get; set; }
