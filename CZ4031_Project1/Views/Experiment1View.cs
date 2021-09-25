@@ -33,7 +33,12 @@ namespace CZ4031_Project1.Views
                     Views.MainView.Display();
                     break;
                 case "4":
-                    Environment.Exit(0);
+                    //Environment.Exit(0);
+                    //Testing
+                    foreach (var x in BlockController.Blocks)
+                    {
+                        Console.WriteLine("{0}: {1}", BitConverter.ToString(x.Key), x.Value.Id);
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid selection, please try again.");
