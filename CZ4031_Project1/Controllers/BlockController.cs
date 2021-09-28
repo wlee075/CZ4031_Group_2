@@ -18,6 +18,7 @@ namespace CZ4031_Project1.Controllers
         public static void InsertBlockIntoMemory()
         {
             var addresses = MemoryAddressController.GetAddresses().ToArray();
+            MemoryAddressController.MemoryAddressesForRecords = MemoryAddressController.GetAddresses().ToDictionary(x=>x.Key, y=>y.Value);
             int blockOffsetSize = addresses.Last().Key.Length;
             int counter = 0;
             int recordsPerBlock = (int)GetRecordsPerBlock();

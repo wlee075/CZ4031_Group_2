@@ -63,7 +63,7 @@ namespace CZ4031_Project1.Controllers
         public void PrintMemoryAddresses()
         {
             List<string> lines = new List<string>();
-            foreach (var memoryaddress in MemoryAddressController.GetAddresses())
+            foreach (var memoryaddress in MemoryAddressController.MemoryAddressesForRecords)
             {
                 lines.Add(String.Format("{0}: {1}", BitConverter.ToString(memoryaddress.Key), memoryaddress.Value));
             }
