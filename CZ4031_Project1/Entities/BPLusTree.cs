@@ -10,11 +10,5 @@ namespace CZ4031_Project1.Entities
     {
         public Block rootBlock { get; set; }
 
-        public int MaxKeys { get; set; }
-
-        public static int Levels { get; set; }
-
-        public int NumNodes { get; set; }
-
     }
 }

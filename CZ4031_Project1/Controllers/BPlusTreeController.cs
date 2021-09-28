@@ -12,6 +12,7 @@ namespace CZ4031_Project1.Controllers
         public static Block CurrentRecordBlock { get; set; }
         public static int numNodes { get; set; }
         public static int Levels { get; set; }
+
         public const int NodeAddressSize = BlockController.BlockAddressSize;
         public static Dictionary<byte[], Block> Blocks = BlockController.Blocks;
 
@@ -34,7 +35,6 @@ namespace CZ4031_Project1.Controllers
                 newBlock.Nodes.Add(newNode);
                 newBlock.children = new List<Block>();
                 newBlock.children = null;
-                newBlock.isLeaf = true;
                 tree.rootBlock = newBlock;
                 // Since the root has no parent, parent set to null
                 tree.rootBlock.Parent = null;
@@ -78,10 +78,8 @@ namespace CZ4031_Project1.Controllers
             int midIndex = m / 2;
 
             Block middle = BlockController.CreateBlock();
-            middle.isLeaf = false;
 
             Block rightPart = BlockController.CreateBlock();
-            rightPart.isLeaf = true;
 
             // Set the right part to have middle element and the elements right to
             // the middle element
@@ -222,7 +220,6 @@ namespace CZ4031_Project1.Controllers
                     // do a split again if the internal node becomes full
                     int midIndex = (int)Math.Ceiling(m / 2.0) - 1;
                     Block middle = BlockController.CreateBlock();
-                    middle.isLeaf = false;
                     Block rightPart = BlockController.CreateBlock();
                     // since internal nodes follow a split like the b tree, right
                     // part contains elements right of the mid element, and the
@@ -362,7 +359,6 @@ namespace CZ4031_Project1.Controllers
                 printNode(curr);
                 curr = curr.Next;
             }
-            tree.NumNodes = numNodes;
             Levels = levelNumber;
             return levelNumber;
 

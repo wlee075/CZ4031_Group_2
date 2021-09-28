@@ -14,7 +14,7 @@ namespace CZ4031_Project1.Views
 {
     public static class Experiment2View
     {
-
+        static BPlusTree tree { get; set; }
 
         static Experiment2Controller controller2 = new Experiment2Controller();
 
@@ -26,12 +26,14 @@ namespace CZ4031_Project1.Views
             Console.WriteLine("3. Back to main page");
             Console.WriteLine("4. Exit");
 
+            tree = new BPlusTree();
 
             string input = Console.ReadLine();
             switch (input)
-            {
+            { 
                 case "1":
-                    controller2.BuildTree();
+                    controller2.BuildTree(tree);
+                    BPlusTreeController.PrintTree(tree);
                     break;
                 case "2":
                     Console.WriteLine("Parameter n of the B+ tree    : {0} ", BPlusTreeController.GetMaxKeys());
