@@ -13,49 +13,27 @@ namespace CZ4031_Project1.Controllers
         public static int IndexOfRecordToBeInserted { get; set; }
         public static Block CurrentRecordBlock = BPlusTreeController.CurrentRecordBlock;
         public int levels { get; set; }
+        public int numNodes { get; set; }
         public void BuildTree()
         {
-            var addresses = MemoryAddressController.GetAddresses().ToArray();
-            int blockOffsetSize = addresses.Last().Key.Length;
-            int MaxKeys = BPlusTreeController.GetMaxKeys();
             BPlusTree tree = new BPlusTree();
-            tree.MaxKeys = MaxKeys;
+            var addresses = MemoryAddressController.GetAddresses().ToArray();
             IndexOfRecordToBeInserted = 0;
-
-            //if no root exist, create root block
-            if (tree.rootBlock == null)
+            while (IndexOfRecordToBeInserted < addresses.Count())
             {
-                int counter = 0;
-                CurrentRecordBlock = BlockController.CreateBlock();
-                CurrentRecordBlock.isLeaf = true; //both root and leaf
-                while (counter < tree.MaxKeys)
-                {
-                    Node node = new Node();
-                    node.Key = Convert.ToInt32(addresses[IndexOfRecordToBeInserted].Value.Split('-')[1]);
-                    node.Pointer = addresses[IndexOfRecordToBeInserted].Key;
-                    CurrentRecordBlock.Nodes.Add(node);
-                    MemoryAddressController.InsertValueIntoMemory(BitConverter.ToString(node.Pointer), blockOffsetSize);
-                    counter += 1;
-                    IndexOfRecordToBeInserted += 1;
-                }
-                tree.rootBlock = CurrentRecordBlock;
+                int recordToBeInserted = Convert.ToInt32(addresses[IndexOfRecordToBeInserted].Value.Split('-')[1]);
+                byte[] addressofRecordToBeInserted = addresses[IndexOfRecordToBeInserted].Key;
+                
+                BPlusTreeController.insert(tree, recordToBeInserted, addressofRecordToBeInserted);
+
+                IndexOfRecordToBeInserted += 1;
             }
-            else
-            {
-                while (IndexOfRecordToBeInserted < addresses.Count())
-                {
-                    int recordToBeInserted = Convert.ToInt32(addresses[IndexOfRecordToBeInserted].Value.Split('-')[1]);
-                    byte[] addressofRecordToBeInserted = addresses[IndexOfRecordToBeInserted].Key;
 
-                    BPlusTreeController.InsertBlockIntoBPlusTree(tree, recordToBeInserted, addressofRecordToBeInserted);
+            numNodes = tree.NumNodes;
+            levels = BPlusTreeController.PrintTree(tree);
+            Console.WriteLine("levels {0}", levels);
 
-                    IndexOfRecordToBeInserted += 1;
-                }
-            }
-            levels = BPlusTreeController.GetLevels(tree);
-            Console.WriteLine("Root and child contents: ");
-            BPlusTreeController.displayTree(tree.rootBlock.Address, levels);
-
+           
         }
 
     }

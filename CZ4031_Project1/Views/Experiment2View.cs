@@ -16,7 +16,7 @@ namespace CZ4031_Project1.Views
     {
 
 
-        static Experiment2Controller controller = new Experiment2Controller();
+        static Experiment2Controller controller2 = new Experiment2Controller();
 
         public static void Display()
         {
@@ -31,11 +31,12 @@ namespace CZ4031_Project1.Views
             switch (input)
             {
                 case "1":
-                    controller.BuildTree();
+                    controller2.BuildTree();
                     break;
                 case "2":
                     Console.WriteLine("Parameter n of the B+ tree    : {0} ", BPlusTreeController.GetMaxKeys());
-                    Console.WriteLine("Height of the B+ tree    : {0} ", controller.levels);
+                    Console.WriteLine("Height of the B+ tree    : {0} ", controller2.levels);
+                    Console.WriteLine("Number nodes of the B+ tree    : {0} ", controller2.numNodes);
                     break;
                 case "3":
                     Views.MainView.Display();

@@ -10,6 +10,7 @@ namespace CZ4031_Project1.Entities
     {
         public int Key { get; set; }
         public byte[] Pointer { get; set; }
+        public List<byte[]> KeyPointers { get; set; }
 
     }
 
