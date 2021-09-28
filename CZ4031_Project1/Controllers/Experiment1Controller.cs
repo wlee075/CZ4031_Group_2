@@ -75,9 +75,10 @@ namespace CZ4031_Project1.Controllers
             int recordSize = (int)RecordController.GetRecordSize();
             foreach (Record r in records)
             {
-                MemoryAddressController.InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
+                 MemoryAddressController.InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
             }
 
+            
             BlockController.InsertBlockIntoMemory();
         }
 

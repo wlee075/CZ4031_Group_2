@@ -45,7 +45,6 @@
     <Compile Include="Controllers\AccessFileController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\BPlusTreeController.cs" />
-    <Compile Include="Controllers\BuildTreeHelperMethods.cs" />
     <Compile Include="Controllers\Experiment1Controller.cs" />
     <Compile Include="Controllers\Experiment2Controller.cs" />
     <Compile Include="Controllers\MainController.cs" />

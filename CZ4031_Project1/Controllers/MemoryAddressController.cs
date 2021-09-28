@@ -74,6 +74,7 @@ namespace CZ4031_Project1.Controllers
            // Console.WriteLine("{0}---{1}", BitConverter.ToString(address), MemoryAddresses[address]);
             return address;
         }
+
         public static Dictionary<byte[],string> GetAddresses()
         {
             return MemoryAddresses;

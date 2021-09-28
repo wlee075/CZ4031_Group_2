@@ -17,6 +17,7 @@ namespace CZ4031_Project1.Views
 
 
         static Experiment2Controller controller = new Experiment2Controller();
+
         public static void Display()
         {
             Console.WriteLine("Please key in your selection: ");
@@ -30,16 +31,11 @@ namespace CZ4031_Project1.Views
             switch (input)
             {
                 case "1":
-                    Dictionary<byte[], string> addresses = MemoryAddressController.GetAddresses();
-                    Block block = new Block();
-                   // foreach (var address in addresses){
-                   //   if(block.Address.GetValue)
-                   // }
-
-
+                    controller.BuildTree();
                     break;
                 case "2":
-                    
+                    Console.WriteLine("Parameter n of the B+ tree    : {0} ", BPlusTreeController.GetMaxKeys());
+                    Console.WriteLine("Height of the B+ tree    : {0} ", controller.levels);
                     break;
                 case "3":
                     Views.MainView.Display();
