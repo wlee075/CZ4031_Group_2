@@ -20,7 +20,6 @@ namespace CZ4031_Project1.Entities
         public Block Next { get; set; }
         public Block Previous { get; set; }
         public List<Block> children { get; set; }
-        public List<byte[]> internalNodePointers { get; set; }
         
         public List<Node> Nodes { get; set; }
 

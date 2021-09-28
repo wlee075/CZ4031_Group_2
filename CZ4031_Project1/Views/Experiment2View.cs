@@ -35,8 +35,8 @@ namespace CZ4031_Project1.Views
                     break;
                 case "2":
                     Console.WriteLine("Parameter n of the B+ tree    : {0} ", BPlusTreeController.GetMaxKeys());
-                    Console.WriteLine("Height of the B+ tree    : {0} ", controller2.levels);
-                    Console.WriteLine("Number nodes of the B+ tree    : {0} ", controller2.numNodes);
+                    Console.WriteLine("Height of the B+ tree    : {0} ", BPlusTreeController.Levels);
+                    Console.WriteLine("Number nodes of the B+ tree    : {0} ", BPlusTreeController.numNodes);
                     break;
                 case "3":
                     Views.MainView.Display();

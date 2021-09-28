@@ -19,8 +19,9 @@ namespace CZ4031_Project1.Controllers
             BPlusTree tree = new BPlusTree();
             var addresses = MemoryAddressController.GetAddresses().ToArray();
             IndexOfRecordToBeInserted = 0;
-            while (IndexOfRecordToBeInserted < addresses.Count())
-            {
+            //while (IndexOfRecordToBeInserted < addresses.Count())
+             while (IndexOfRecordToBeInserted < 2000)
+                {
                 int recordToBeInserted = Convert.ToInt32(addresses[IndexOfRecordToBeInserted].Value.Split('-')[1]);
                 byte[] addressofRecordToBeInserted = addresses[IndexOfRecordToBeInserted].Key;
                 
@@ -31,9 +32,6 @@ namespace CZ4031_Project1.Controllers
 
             numNodes = tree.NumNodes;
             levels = BPlusTreeController.PrintTree(tree);
-            Console.WriteLine("levels {0}", levels);
-
-           
         }
 
     }

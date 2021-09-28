@@ -11,6 +11,7 @@ namespace CZ4031_Project1.Controllers
     {
         public static Block CurrentRecordBlock { get; set; }
         public static int numNodes { get; set; }
+        public static int Levels { get; set; }
         public const int NodeAddressSize = BlockController.BlockAddressSize;
         public static Dictionary<byte[], Block> Blocks = BlockController.Blocks;
 
@@ -320,14 +321,6 @@ namespace CZ4031_Project1.Controllers
 
         }
 
-        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize)
-        {
-            for (int i = 0; i < locations.Count; i += nSize)
-            {
-                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
-            }
-        }
-
         public static int PrintTree(BPlusTree tree)
         {
             List<Block> queue = new List<Block>();
@@ -339,7 +332,6 @@ namespace CZ4031_Project1.Controllers
             numNodes = 0;
             while (queue != null)
             {
-                curr = queue[0];
                 curr = poll(ref queue, 0);
                 if (null == curr)
                 {
@@ -371,6 +363,7 @@ namespace CZ4031_Project1.Controllers
                 curr = curr.Next;
             }
             tree.NumNodes = numNodes;
+            Levels = levelNumber;
             return levelNumber;
 
         }
@@ -409,40 +402,6 @@ namespace CZ4031_Project1.Controllers
             int keySize = sizeof(int);
             maxKeys = Math.Floor(Convert.ToDecimal(blockSize - blockAddressSize - keySize) / (pointerSize.Length + keySize));
             return (int)maxKeys;
-        }
-
-        public static int GetLevels(BPlusTree tree)
-        {
-            if (tree.rootBlock == null)
-            {
-                return 0;
-            }
-
-            int levels = 1;
-
-            Block root = Blocks[tree.rootBlock.Address];
-
-            Block cursor = root;
-
-            try
-            {
-                foreach(Block block in cursor.children)
-                {
-                    while (!block.isLeaf)
-                    {
-                        levels++;
-                    }
-                }
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception found: " + e);
-            }
-
-            // Account for linked list (count as one level)
-            levels++;
-            return levels;
         }
 
 
