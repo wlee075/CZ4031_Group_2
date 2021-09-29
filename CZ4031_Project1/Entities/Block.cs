@@ -10,15 +10,15 @@ namespace CZ4031_Project1.Entities
 {
     public class Block
     {
-        public bool IsRecordBlock { get; set; }
+       // public bool IsRecordBlock { get; set; }
         public string Id { get; set; }
         public byte[] Address { get; set; }
         public byte[] Pointer { get; set; }
         
-        public Block Parent { get; set; }
-        public Block Next { get; set; }
-        public Block Previous { get; set; }
-        public List<Block> children { get; set; }
+        //public Block Parent { get; set; }
+        //public Block Next { get; set; }
+       // public Block Previous { get; set; }
+        //public List<Block> children { get; set; }
         
         public List<Node> Nodes { get; set; }
 

@@ -63,23 +63,25 @@ namespace CZ4031_Project1.Controllers
         public void PrintMemoryAddresses()
         {
             List<string> lines = new List<string>();
-            foreach (var memoryaddress in MemoryAddressController.MemoryAddressesForRecords)
+            foreach (var memoryaddress in MemoryAddressController.GetAddresses())
             {
                 lines.Add(String.Format("{0}: {1}", BitConverter.ToString(memoryaddress.Key), memoryaddress.Value));
             }
+            //var memoryaddress = MemoryAddressController.GetAddressesForRecords().ElementAt(1);
+            //lines.Add(String.Format("{0}: {1}", BitConverter.ToString(memoryaddress.Key), memoryaddress.Value.NumVotes));
             AccessFileController afcontroller = new AccessFileController(MainController.GetMainDirectory() + "experiment1_stored_data.txt");
             afcontroller.Write(lines);
         }
         private void SaveRecords(int tconst, int avgrating, int numvotes, List<Record> records)
         {
-            int recordSize = (int)RecordController.GetRecordSize();
+    
             foreach (Record r in records)
             {
-                 MemoryAddressController.InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
+                 MemoryAddressController.InsertRecordIntoMemory(r);
             }
 
-            
-            BlockController.InsertBlockIntoMemory();
+            //uncomment later
+           // BlockController.InsertBlockIntoMemory();
         }
 
 

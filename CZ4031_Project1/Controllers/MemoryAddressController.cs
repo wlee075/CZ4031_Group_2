@@ -13,7 +13,7 @@ namespace CZ4031_Project1.Controllers
         private static byte[] Address { get; set; }
         private static int AddressSize { get; set; }
         private static Dictionary<byte[], string> MemoryAddresses = new Dictionary<byte[], string>();
-        public static  Dictionary<byte[], string> MemoryAddressesForRecords = new Dictionary<byte[], string>();
+        public static  Dictionary<byte[], Record> MemoryAddressesForRecords = new Dictionary<byte[], Record>();
 
         public static byte[] GetNewAddress(int size)
         {
@@ -75,7 +75,15 @@ namespace CZ4031_Project1.Controllers
            // Console.WriteLine("{0}---{1}", BitConverter.ToString(address), MemoryAddresses[address]);
             return address;
         }
-        public static Dictionary<byte[], string> GetAddressesForRecords()
+        public static void InsertRecordIntoMemory(Record r)
+        {
+            int recordSize = (int)RecordController.GetRecordSize();
+            
+            var address = InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
+            MemoryAddressesForRecords[address] = r;
+
+        }
+        public static Dictionary<byte[], Record> GetAddressesForRecords()
         {
             return MemoryAddressesForRecords;
         }

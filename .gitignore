@@ -388,4 +388,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 #textfiles
-experiment1_stored_data.txt
+*.txt

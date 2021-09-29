@@ -12,13 +12,14 @@ namespace CZ4031_Project1.Controllers
         public const int BlockSize = 100;
         public const int BlockAddressSize = 10;
         public static Dictionary<byte[], Block> Blocks = new Dictionary<byte[], Block>();
-
+        public static Dictionary<byte[], Block> BPlussTreeBlocks = new Dictionary<byte[], Block>();
+        static int BlockCounter = 1;
         public static Block CurrentRecordBlock { get; set; }
 
         public static void InsertBlockIntoMemory()
         {
             var addresses = MemoryAddressController.GetAddresses().ToArray();
-            MemoryAddressController.MemoryAddressesForRecords = MemoryAddressController.GetAddresses().ToDictionary(x=>x.Key, y=>y.Value);
+
             int blockOffsetSize = addresses.Last().Key.Length;
             int counter = 0;
             int recordsPerBlock = (int)GetRecordsPerBlock();
@@ -48,22 +49,30 @@ namespace CZ4031_Project1.Controllers
         {
             Block newBlock = new Block();
 
-            //If there are no blocks
-            if (CurrentRecordBlock == null)
-            {
-                newBlock.Id = "block1";
-            }
-            else
-            {
-                //Increase id by 1
-                newBlock.Id = String.Format("block{0}", Convert.ToInt32(CurrentRecordBlock.Id.Replace("block", "")) + 1);
-            }
+          
+             //Increase id by 1
+            newBlock.Id = String.Format("block{0}", BlockCounter);
             newBlock.Address = MemoryAddressController.InsertValueIntoMemory(newBlock.Id, BlockAddressSize);
             // set max keys each node can hold
             newBlock.Nodes = new List<Node>();
-            newBlock.IsRecordBlock = true;
+            //newBlock.IsRecordBlock = true;
             CurrentRecordBlock = newBlock;
             Blocks[newBlock.Address] = newBlock;
+            BlockCounter += 1;
+            return newBlock;
+        }
+        public static Block CreateBPlusTreeBlock()
+        {
+            Block newBlock = new Block();
+            //Increase id by 1
+            newBlock.Id = String.Format("block{0}", BlockCounter);
+            //newBlock.Address = MemoryAddressController.InsertValueIntoMemory(newBlock.Id, BlockAddressSize);
+            // set max keys each node can hold
+            newBlock.Nodes = new List<Node>();
+            //newBlock.IsRecordBlock = true;
+            CurrentRecordBlock = newBlock;
+            //BPlussTreeBlocks[newBlock.Address] = newBlock;
+            BlockCounter += 1;
             return newBlock;
         }
 
