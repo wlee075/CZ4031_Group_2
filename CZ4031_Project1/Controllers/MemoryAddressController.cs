@@ -10,11 +10,11 @@ namespace CZ4031_Project1.Controllers
     public static class MemoryAddressController
     {
         // Memory Address Byte Indexes 0x[0][1][2][3][4]
-        private static byte[] Address { get; set; }
-        private static int AddressSize { get; set; }
-        private static Dictionary<byte[], string> MemoryAddresses = new Dictionary<byte[], string>();
+        public static byte[] Address { get; set; }
+        public static int AddressSize { get; set; }
+        public static Dictionary<byte[], string> MemoryAddresses = new Dictionary<byte[], string>();
         public static  Dictionary<byte[], Record> MemoryAddressesForRecords = new Dictionary<byte[], Record>();
-
+       static int currentNumVote = 0;
         public static byte[] GetNewAddress(int size)
         {
             if(Address == null)
@@ -29,7 +29,7 @@ namespace CZ4031_Project1.Controllers
             AddBytes(0, size);
             return address;
         }
-        private static void AddBytes(int index, int size)
+        public static void AddBytes(int index, int size)
         {
             try
             {
@@ -77,10 +77,14 @@ namespace CZ4031_Project1.Controllers
         }
         public static void InsertRecordIntoMemory(Record r)
         {
-            int recordSize = (int)RecordController.GetRecordSize();
-            
-            var address = InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
-            MemoryAddressesForRecords[address] = r;
+            if (r.NumVotes != currentNumVote)
+            {
+                int recordSize = (int)RecordController.GetRecordSize();
+
+                var address = InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
+                MemoryAddressesForRecords[address] = r;
+                currentNumVote = r.NumVotes;
+            }
 
         }
         public static Dictionary<byte[], Record> GetAddressesForRecords()

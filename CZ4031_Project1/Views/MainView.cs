@@ -26,7 +26,7 @@ namespace CZ4031_Project1.Views
                     Views.Experiment1View.Display();
                     break;
                 case "2":
-                    //Views.Experiment2View.Display();
+                    Views.Experiment2View.Display();
                     break;
                 case "3":
                     Experiment1Controller exp1 = new Experiment1Controller();

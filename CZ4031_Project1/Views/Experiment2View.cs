@@ -26,19 +26,14 @@ namespace CZ4031_Project1.Views
             Console.WriteLine("3. Back to main page");
             Console.WriteLine("4. Exit");
 
-            tree = new BPlusTree();
-
             string input = Console.ReadLine();
             switch (input)
             { 
                 case "1":
-                    controller2.BuildTree(tree);
-                    BPlusTreeController.PrintTree(tree);
+                    controller2.AAA();
                     break;
                 case "2":
-                    Console.WriteLine("Parameter n of the B+ tree    : {0} ", BPlusTreeController.GetMaxKeys());
-                    Console.WriteLine("Height of the B+ tree    : {0} ", BPlusTreeController.Levels);
-                    Console.WriteLine("Number nodes of the B+ tree    : {0} ", BPlusTreeController.numNodes);
+                 
                     break;
                 case "3":
                     Views.MainView.Display();

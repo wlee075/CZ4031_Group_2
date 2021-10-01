@@ -5,31 +5,40 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using CZ4031_Project1.Controllers;
 namespace CZ4031_Project1.Controllers
 {
     public class Experiment2Controller
-    {
-        public static int IndexOfRecordToBeInserted { get; set; }
-        public static Block CurrentRecordBlock = BPlusTreeController.CurrentRecordBlock;
-        public BPlusTree BuildTree(BPlusTree tree)
+    { 
+        public void AAA()
         {
-            
-            var addresses = MemoryAddressController.GetAddresses().ToArray();
-            IndexOfRecordToBeInserted = 0;
-            //while (IndexOfRecordToBeInserted < addresses.Count())
-             while (IndexOfRecordToBeInserted < 200)
-                {
-                int recordToBeInserted = Convert.ToInt32(addresses[IndexOfRecordToBeInserted].Value.Split('-')[1]);
-                byte[] addressofRecordToBeInserted = addresses[IndexOfRecordToBeInserted].Key;
-                
-                BPlusTreeController.insert(tree, recordToBeInserted, addressofRecordToBeInserted);
+            BPlusTreeController.BplusTree = new BPlusTree(3);
+            var bpt = BPlusTreeController.BplusTree;
+            bpt.insert(5, 33);
+            bpt.insert(15, 21);
+            bpt.insert(25, 31);
+            bpt.insert(35, 41);
+            bpt.insert(45, 10);
 
-                IndexOfRecordToBeInserted += 1;
+            if (bpt.search(15) != 0)
+            {
+                Console.WriteLine("Found");
             }
-
-            return tree;
+            else
+            {
+                Console.WriteLine("Not Found");
+            }
         }
+        //BPlusTree bpt = BPlusTreeController.BplusTree;
+        //bpt = new BPlusTree(3);
+        //bpt.insert(5, 33);
+        //bpt.insert(15, 21);
+        //bpt.insert(25, 31);
+        //bpt.insert(35, 41);
+        //bpt.insert(45, 10);
+        //System.out.println(bpt.root.childPointers);
+
+
 
     }
 }

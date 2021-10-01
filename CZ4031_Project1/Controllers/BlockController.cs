@@ -34,11 +34,11 @@ namespace CZ4031_Project1.Controllers
                 }
                 
                 //Store records into block
-                Node node = new Node();
-                node.Key = Convert.ToInt32(addresses[counter].Value.Split('-')[1]);
-                node.Pointer = addresses[counter].Key;
-                CurrentRecordBlock.Nodes.Add(node);
-                MemoryAddressController.InsertValueIntoMemory(BitConverter.ToString(node.Pointer), blockOffsetSize);
+                //Node node = new Node();
+                //node.Key = Convert.ToInt32(addresses[counter].Value.Split('-')[1]);
+                //node.Pointer = addresses[counter].Key;
+                //CurrentRecordBlock.Nodes.Add(node);
+                //MemoryAddressController.InsertValueIntoMemory(BitConverter.ToString(node.Pointer), blockOffsetSize);
                
                 counter += 1;
             }

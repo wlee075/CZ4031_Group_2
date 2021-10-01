@@ -72,7 +72,7 @@ namespace CZ4031_Project1.Controllers
             AccessFileController afcontroller = new AccessFileController(MainController.GetMainDirectory() + "experiment1_stored_data.txt");
             afcontroller.Write(lines);
         }
-        private void SaveRecords(int tconst, int avgrating, int numvotes, List<Record> records)
+        public void SaveRecords(int tconst, int avgrating, int numvotes, List<Record> records)
         {
     
             foreach (Record r in records)

@@ -12,17 +12,17 @@ namespace CZ4031_Project1.Controllers
         List<string> lines { get; set; }
         string lineTabs { get; set; }
         int minKey = 5;
-        int maxKey = 10;
+        int maxKey = 11;
         int index = 0;
         int level = 1;
         int increment = 1;
         Dictionary<byte[], Record>addresses = MemoryAddressController.GetAddressesForRecords();
-        int count = 1070318;
+        int count = 0;
         public void BuildBPlusTree()
         {
             
-            lines = new List<string>();         
-
+            lines = new List<string>();
+            count = addresses.Count;
             while (increment  <= count)
             {
                 PrintBlock();
@@ -57,7 +57,7 @@ namespace CZ4031_Project1.Controllers
                     index += increment;
                 }
             }
-            lines.Add(line);
+            //lines.Add(line);
             
             line = lineTabs;
             foreach (var x in indexes)
