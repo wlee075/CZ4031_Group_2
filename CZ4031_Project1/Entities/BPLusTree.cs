@@ -21,6 +21,10 @@ namespace CZ4031_Project1.Entities
         {
             return BPlusTreeController.countNodes(this);
         }
+        public int getMinKeys()
+        {
+            return (int)Math.Ceiling((decimal)rootBlock.maxNodes / 2);
+        }
         public int getNumberOfInternalNodes()
         {
             return BPlusTreeController.countInternalNodes(this);

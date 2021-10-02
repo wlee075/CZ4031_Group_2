@@ -9,6 +9,80 @@ namespace CZ4031_Project1.Controllers
 {
     public class BPlusTreeController
     {
+        static int Key { get; set; }
+        static Block block { get; set; }
+        static Node node { get; set; }
+        static int minKeys { get; set; }
+        static int nodeCount { get; set; }
+        public static void DeleteNode(int key)
+        {
+            Key = 12;
+            block = BlockController.FindBlock(key);
+            node = BlockController.FindNode(block, key);
+            minKeys = Experiment2Controller.tree.getMinKeys() - 1;
+            nodeCount = BlockController.GetNodeCount(block);
+
+            Key = 17;
+            BlockController.printBlock(block);
+            var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
+            var nextblock = lastNodeInBlock.nextBlock;
+            BlockController.printBlock(nextblock);
+            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            //nextblock = lastNodeInBlock.nextBlock;
+            //BlockController.printBlock(nextblock);
+            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            //nextblock = lastNodeInBlock.nextBlock;
+            //BlockController.printBlock(nextblock);
+            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            //nextblock = lastNodeInBlock.nextBlock;
+            //BlockController.printBlock(nextblock);
+            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            //nextblock = lastNodeInBlock.nextBlock;
+            //BlockController.printBlock(nextblock);
+            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            //nextblock = lastNodeInBlock.nextBlock;
+            //BlockController.printBlock(nextblock);
+
+            //if is leaf
+            if (block.child == null)
+            {
+                // CheckLeafBlock(nextblock);
+            }
+            BlockController.printBlock(nextblock);
+            lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            nextblock = lastNodeInBlock.nextBlock;
+            BlockController.printBlock(nextblock);
+        }
+        private static void CheckLeafBlock(Block block)
+        {
+
+            if (block != null)
+            {
+
+                //if has less than minimum keys aftering deleting
+                if (BlockController.GetNodeCount(block) - 1 <= minKeys)
+                {
+                    //Borrow Keys from next sibling
+                    var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
+                    var nextBlock = lastNodeInBlock.nextBlock;
+                    var nextBlockNode = nextBlock.next;
+
+                    Node copyNode = new Node();
+                    copyNode.Key = nextBlockNode.Key;
+                    copyNode.nextBlock = nextBlock;
+
+                    lastNodeInBlock.next = copyNode;
+                    lastNodeInBlock.nextBlock = null;
+
+                    BlockController.DeleteAndShift(nextBlock, nextBlockNode.Key);
+
+                }
+                //Shifting of nodes in current block
+                BlockController.DeleteAndShift(block, Key);
+
+            }
+        }
+
         public static void insert(BPlusTree tree, int key, MemoryAddress address)
         {
             // empty tree

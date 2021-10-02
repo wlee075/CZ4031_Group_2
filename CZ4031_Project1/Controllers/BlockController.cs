@@ -467,5 +467,90 @@ namespace CZ4031_Project1.Controllers
             }
             Console.WriteLine();
         }
+        public static Block FindBlock(int key)
+        {
+            var tree = Experiment2Controller.tree;
+            var currBlock = tree.rootBlock;
+
+            while (currBlock != null)
+            {
+                var node = FindNode(currBlock, key);
+                if (node != null)
+                {
+                    return currBlock;
+                }
+
+                currBlock = currBlock.child;
+            }
+            return null;
+        }
+        public static Node FindNode(Block block, int key)
+        {
+            Node currNode = block.next;
+            while (currNode != null)
+            {
+                if (currNode.Key == key)
+                {
+                    return currNode;
+                }
+                currNode = currNode.next;
+            }
+            return null;
+        }
+        public static Node FindLastNodeInBlock(Block block)
+        {
+            Node currNode = block.next;
+            while (currNode.next != null)
+            {
+                currNode = currNode.next;
+            }
+            return currNode;
+        }
+        public static Node FindPrevNode(Block block, int key)
+        {
+            Node prevNode = null;
+            Node currNode = block.next;
+            while (currNode != null)
+            {
+                if (currNode.Key == key)
+                {
+                    return prevNode;
+                }
+                prevNode = currNode;
+                currNode = currNode.next;
+            }
+            return null;
+        }
+        public static void DeleteAndShift(Block block, int key)
+        {
+            var prevNode = FindPrevNode(block, key);
+            var currNode = FindNode(block, key);
+            //if previous node exists
+            if (prevNode != null)
+            {
+                //deletes and points to next
+                prevNode.next = currNode.next;
+                currNode = null;
+            }
+            else
+            {
+                var nextNode = currNode.next;
+                currNode.Key = nextNode.Key;
+                currNode.nextBlock = nextNode.nextBlock;
+                currNode.next = nextNode.next;
+                nextNode = null;
+            }
+        }
+        public static int GetNodeCount(Block block)
+        {
+            int total = 1;
+            Node currNode = block.next;
+            while (currNode.next != null)
+            {
+                total += 1;
+                currNode = currNode.next;
+            }
+            return total;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace CZ4031_Project1.Controllers
         public void BuildTree()
         {
             // Read from original dataset
-            tree = BPlusTreeController.createTree(100);
+            tree = BPlusTreeController.createTree(300);
             List<MemoryAddress> addresses = MemoryAddressController.GetAddresses();
             /*
             int[] test = { 1, 4, 7, 10, 17, 21, 31, 25, 19, 20, 28,42};
@@ -38,17 +38,15 @@ namespace CZ4031_Project1.Controllers
                 BPlusTreeController.insert(tree, recordToBeInserted, x);
                 
             }
-            Console.WriteLine("n: " + tree.getN());
-            Console.WriteLine("Number of Nodes: " + tree.getNumberOfNodes());
-            Console.WriteLine("Number of Internal Nodes: " + tree.getNumberOfInternalNodes());
-            Console.WriteLine("Tree Height: " + tree.getHeight());
-            Console.Write("Content of Root Node: ");
-            BlockController.printBlock(tree.rootBlock);
-            Console.Write("Content of 1st child Node: ");
-            BlockController.printBlock(tree.rootBlock.child);
-
+            //Console.WriteLine("n: " + tree.getN());
+            //Console.WriteLine("Number of Nodes: " + tree.getNumberOfNodes());
+            //Console.WriteLine("Number of Internal Nodes: " + tree.getNumberOfInternalNodes());
+            //Console.WriteLine("Tree Height: " + tree.getHeight());
+            //Console.Write("Content of Root Node: ");
+            //BlockController.printBlock(tree.rootBlock);
+            //Console.Write("Content of 1st child Node: ");
+            //BlockController.printBlock(tree.rootBlock.child);
             //List<MemoryAddress> list = BPlusTreeController.retrieveMovie(tree, 500);
-
             //decimal total = 0;
             //foreach (MemoryAddress r in list)
             //{

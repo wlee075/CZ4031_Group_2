@@ -35,7 +35,14 @@ namespace CZ4031_Project1.Views
                     Views.Experiment4View.Display();
                     break;
                 case "5":
-                    Environment.Exit(0);
+                    //Environment.Exit(0);
+                    Experiment1Controller exp1 = new Experiment1Controller();
+                    exp1.StoreData();
+                    Experiment2Controller exp2 = new Experiment2Controller();
+                    exp2.BuildTree();
+                    var tree = Experiment2Controller.tree;
+
+                    BPlusTreeController.DeleteNode(8);
                     break;
                 default:
                     Console.WriteLine("Invalid selection, please try again.");
