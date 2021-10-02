@@ -7,36 +7,27 @@ using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Views
 {
-    public static class Experiment1View
+    public static class Experiment3View
     {
-        static Experiment1Controller controller = new Experiment1Controller();
+        static Experiment3Controller controller = new Experiment3Controller();
         public static void Display()
         {
-            string directory = controller.GetDirectory();
             Console.WriteLine("Please key in your selection: ");
-            Console.WriteLine("1. Store the data from {0}", directory);
-            Console.WriteLine("2. Show statistics");
-            Console.WriteLine("3. Print records");
-            Console.WriteLine("4. Back to main page");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("1. Retrieve movies w numVotes = 500");
+            Console.WriteLine("2. Back to main page");
+            Console.WriteLine("3. Exit");
 
-           
+
             string input = Console.ReadLine();
             switch (input)
             {
                 case "1":
-                    controller.StoreData();
+                    controller.retrieveMovie();
                     break;
                 case "2":
-                    controller.ShowStatistics();
-                    break;
-                case "3":
-                    controller.PrintRecords();
-                    break;
-                case "4":
                     Views.MainView.Display();
                     break;
-                case "5":
+                case "3":
                     Environment.Exit(0);
                     break;
                 default:

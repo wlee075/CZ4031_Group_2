@@ -2,43 +2,62 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using CZ4031_Project1.Controllers;
+
 namespace CZ4031_Project1.Controllers
 {
     public class Experiment2Controller
-    { 
-        public void AAA()
+    {
+        public static BPlusTree tree = null;
+        public void BuildTree()
         {
-            BPlusTreeController.BplusTree = new BPlusTree(3);
-            var bpt = BPlusTreeController.BplusTree;
-            bpt.insert(5, 33);
-            bpt.insert(15, 21);
-            bpt.insert(25, 31);
-            bpt.insert(35, 41);
-            bpt.insert(45, 10);
+            // Read from original dataset
+            tree = BPlusTreeController.createTree(100);
+            List<MemoryAddress> addresses = MemoryAddressController.GetAddresses();
+            /*
+            int[] test = { 1, 4, 7, 10, 17, 21, 31, 25, 19, 20, 28,42};
+            foreach (int t in test){
+                BPlusTreeController.insert(tree, t, null);
 
-            if (bpt.search(15) != 0)
-            {
-                Console.WriteLine("Found");
             }
-            else
-            {
-                Console.WriteLine("Not Found");
+            Console.WriteLine("n: " + tree.getN());
+            Console.WriteLine("Number of Nodes: " + tree.getNumberOfNodes());
+            Console.WriteLine("Number of Internal Nodes: "+ tree.getNumberOfInternalNodes());
+            Console.WriteLine("Tree Height: " + tree.getHeight());
+            Console.Write("Content of Root Node: ");
+            BlockController.printBlock(tree.rootBlock);
+            Console.Write("Content of 1st child Node: ");
+            BlockController.printBlock(tree.rootBlock.child);
+            
+            BPlusTreeController.printTree(tree);
+            */
+            foreach (MemoryAddress x in addresses){
+                
+                int recordToBeInserted = Convert.ToInt32(x.Value.Split('-')[1]);
+                BPlusTreeController.insert(tree, recordToBeInserted, x);
+                
             }
+            Console.WriteLine("n: " + tree.getN());
+            Console.WriteLine("Number of Nodes: " + tree.getNumberOfNodes());
+            Console.WriteLine("Number of Internal Nodes: " + tree.getNumberOfInternalNodes());
+            Console.WriteLine("Tree Height: " + tree.getHeight());
+            Console.Write("Content of Root Node: ");
+            BlockController.printBlock(tree.rootBlock);
+            Console.Write("Content of 1st child Node: ");
+            BlockController.printBlock(tree.rootBlock.child);
+
+            //List<MemoryAddress> list = BPlusTreeController.retrieveMovie(tree, 500);
+
+            //decimal total = 0;
+            //foreach (MemoryAddress r in list)
+            //{
+            //    total += Convert.ToDecimal(r.Value.Split('-')[2]);
+            //}
+            //decimal average = total / list.Count;
+
+            //Console.WriteLine("Average Of averageRating: "+ average);
+            //Console.WriteLine("Number of record: " + list.Count);
         }
-        //BPlusTree bpt = BPlusTreeController.BplusTree;
-        //bpt = new BPlusTree(3);
-        //bpt.insert(5, 33);
-        //bpt.insert(15, 21);
-        //bpt.insert(25, 31);
-        //bpt.insert(35, 41);
-        //bpt.insert(45, 10);
-        //System.out.println(bpt.root.childPointers);
-
-
-
     }
 }

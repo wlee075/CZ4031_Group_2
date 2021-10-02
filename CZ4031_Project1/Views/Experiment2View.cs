@@ -1,23 +1,15 @@
 ﻿using CZ4031_Project1.Controllers;
-using CZ4031_Project1.Entities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Views
 {
     public static class Experiment2View
     {
-        static BPlusTree tree { get; set; }
-
-        static Experiment2Controller controller2 = new Experiment2Controller();
-
+        static Experiment2Controller controller = new Experiment2Controller();
         public static void Display()
         {
             Console.WriteLine("Please key in your selection: ");
@@ -26,14 +18,15 @@ namespace CZ4031_Project1.Views
             Console.WriteLine("3. Back to main page");
             Console.WriteLine("4. Exit");
 
+
             string input = Console.ReadLine();
             switch (input)
-            { 
+            {
                 case "1":
-                    controller2.AAA();
+                    controller.BuildTree();
                     break;
                 case "2":
-                 
+                    
                     break;
                 case "3":
                     Views.MainView.Display();

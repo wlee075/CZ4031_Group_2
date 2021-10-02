@@ -29,16 +29,10 @@ namespace CZ4031_Project1.Views
                     Views.Experiment2View.Display();
                     break;
                 case "3":
-                    Experiment1Controller exp1 = new Experiment1Controller();
-                    Experiment2ControllerZT exp2 = new Experiment2ControllerZT();
-                    exp1.StoreData();
-                    Console.WriteLine("Building B-Plus Tree...");
-                    exp2.BuildBPlusTree();
-                    Console.WriteLine("Building B-Plus Tree Complete");
-                    exp2.Print();
+                    Views.Experiment3View.Display();
                     break;
                 case "4":
-                    
+                    Views.Experiment4View.Display();
                     break;
                 case "5":
                     Environment.Exit(0);

@@ -8,7 +8,7 @@ namespace CZ4031_Project1.Controllers
 {
     public static class RecordController
     {
-        public static double RecordSize { get; set; }
+        private static double RecordSize { get; set; }
         public static double TotalRecord { get; set; }
         public static void SetRecordSize(int tconst, int avgrating, int numvotes)
         {
@@ -18,5 +18,6 @@ namespace CZ4031_Project1.Controllers
         {
             return RecordSize;
         }
+        
     }
 }

@@ -10,88 +10,42 @@ namespace CZ4031_Project1.Controllers
     public static class MemoryAddressController
     {
         // Memory Address Byte Indexes 0x[0][1][2][3][4]
-        public static byte[] Address { get; set; }
-        public static int AddressSize { get; set; }
-        public static Dictionary<byte[], string> MemoryAddresses = new Dictionary<byte[], string>();
-        public static  Dictionary<byte[], Record> MemoryAddressesForRecords = new Dictionary<byte[], Record>();
-       static int currentNumVote = 0;
-        public static byte[] GetNewAddress(int size)
+        private static byte[] Address { get; set; }
+        private static int AddressSize { get; set; }
+        private static List<MemoryAddress> MemoryAddresses = new List<MemoryAddress>();
+        public static void SetAddressSize(int size)
         {
-            if(Address == null)
-            {
-                AddressSize = 1;
-                Address = new byte[AddressSize];
-            }
+            Address = new byte[size];
+            AddressSize = size;
+        }
 
+        private static byte[] GetNewAddress()
+        {
+            int index = Address.Length - 1;
+            Address[index] += 1;
+            CheckBytes(index, Address[index]);
+            return Address;
+        }
+        private static void CheckBytes(int index, byte value)
+        {
+            if(value == 0)
+            {
+                //increase byte of next index
+                Address[index - 1] += 1;
+                CheckBytes(index - 1, Address[index - 1]);
+            }
+        }
+        public static void InsertValueIntoMemory(string value)
+        {
             byte[] address = new byte[AddressSize];
-            Address.CopyTo(address, 0);
-            Array.Reverse(address);
-            AddBytes(0, size);
-            return address;
+            GetNewAddress().CopyTo(address, 0);
+            MemoryAddress memoryAddress = new MemoryAddress();
+            memoryAddress.Address = new byte[AddressSize];
+            memoryAddress.Address = address; 
+            memoryAddress.Value = value;
+            MemoryAddresses.Add(memoryAddress);
         }
-        public static void AddBytes(int index, int size)
-        {
-            try
-            {
-                //carry over bytes
-                if (Address[index] + size > 255)
-                {
-                    Address[index] = Convert.ToByte(Address[index] + size - 256);
-                    AddBytes(index + 1, 1);
-                }
-                else
-                {
-                    Address[index] = Convert.ToByte(Address[index] + size);
-                }
-            }
-            catch
-            {
-                AddressSize += 1;
-                byte[] newAddress = new byte[AddressSize];
-                //Console.WriteLine("overflow: {0}", BitConverter.ToString(newAddress));
-                //Console.WriteLine(BitConverter.ToString(newAddress));
-                Address.CopyTo(newAddress, 0);
-                
-                Address = newAddress;
-
-                if (Address[index] + size > 255)
-                {
-                    Address[index] = Convert.ToByte(Address[index] + size - 256);
-                    AddBytes(index + 1, 1);
-                }
-                else
-                {
-                    Address[index] = Convert.ToByte(Address[index] + size);
-                }
-
-
-            }
-        }
-        public static byte[] InsertValueIntoMemory(string value, int size)
-        {
-            byte[] address = GetNewAddress(size);
-
-            MemoryAddresses[address] = value;
-           // Console.WriteLine("{0}---{1}", BitConverter.ToString(address), MemoryAddresses[address]);
-            return address;
-        }
-        public static void InsertRecordIntoMemory(Record r)
-        {
-            if (r.NumVotes != currentNumVote)
-            {
-                int recordSize = (int)RecordController.GetRecordSize();
-
-                var address = InsertValueIntoMemory(String.Format("{0}-{1}-{2}", r.Tconst, r.NumVotes, r.AverageRating), recordSize);
-                MemoryAddressesForRecords[address] = r;
-                currentNumVote = r.NumVotes;
-            }
-
-        }
-        public static Dictionary<byte[], Record> GetAddressesForRecords()
-        {
-            return MemoryAddressesForRecords;
-        }
-        public static Dictionary<byte[],string> GetAddresses()
+        public static List<MemoryAddress> GetAddresses()
         {
             return MemoryAddresses;
         }
