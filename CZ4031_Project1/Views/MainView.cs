@@ -43,9 +43,10 @@ namespace CZ4031_Project1.Views
                     var tree = Experiment2Controller.tree;
 
                     var blocks = BlockController.traverseGetBlockList(tree.rootBlock, 18);
+                    BPlusTreeController.TraversedBlocks = blocks;
                     var block = BlockController.FindBlock(blocks, 18);
                     var parentBlock = BlockController.GetParentBlock(blocks, block);
-
+                    BPlusTreeController.DeleteNode(14);
                     BlockController.printBlock(block);
                     BlockController.printBlock(parentBlock);
                     //foreach (var b in blocks)

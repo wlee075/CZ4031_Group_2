@@ -519,10 +519,10 @@ namespace CZ4031_Project1.Controllers
             }
             return null;
         }
-        public static void DeleteAndShift(Block block, int key)
+        public static void DeleteAndShift(List<Block> travblocks, Block block, int key)
         {
-            var prevNode = FindPrevNode(block, key);
-            var currNode = FindNode(block, key);
+            Node prevNode = FindPrevNode(block, key);
+            Node currNode = FindNode(block, key);
             //if previous node exists
             if (prevNode != null)
             {
@@ -538,7 +538,10 @@ namespace CZ4031_Project1.Controllers
                 currNode.next = nextNode.next;
                 nextNode = null;
 
-                //Update parent block
+                //Update node in parent block
+                Block parentBlock = GetParentBlock(travblocks, block);
+                Node parentNode = FindNode(parentBlock, key);
+                parentNode.Key = currNode.Key;
             }
         }
         public static int GetNodeCount(Block block)

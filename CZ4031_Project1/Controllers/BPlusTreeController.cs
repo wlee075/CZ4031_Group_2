@@ -9,51 +9,35 @@ namespace CZ4031_Project1.Controllers
 {
     public class BPlusTreeController
     {
-        static int Key { get; set; }
-        static Block block { get; set; }
+        //static Block block { get; set; }
         static Node node { get; set; }
         static int minKeys { get; set; }
         static int nodeCount { get; set; }
+        public static List<Block> TraversedBlocks { get; set; }
         public static void DeleteNode(int key)
         {
-            Key = 12;
-            //block = BlockController.FindBlock(key);
-            node = BlockController.FindNode(block, key);
+            Block leafBlock = TraversedBlocks.Last();
+            node = BlockController.FindNode(leafBlock, key);
             minKeys = Experiment2Controller.tree.getMinKeys() - 1;
-            nodeCount = BlockController.GetNodeCount(block);
+            nodeCount = BlockController.GetNodeCount(leafBlock);
 
-            Key = 17;
-            BlockController.printBlock(block);
-            var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
-            var nextblock = lastNodeInBlock.nextBlock;
-            BlockController.printBlock(nextblock);
-            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            //nextblock = lastNodeInBlock.nextBlock;
-            //BlockController.printBlock(nextblock);
-            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            //nextblock = lastNodeInBlock.nextBlock;
-            //BlockController.printBlock(nextblock);
-            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            //nextblock = lastNodeInBlock.nextBlock;
-            //BlockController.printBlock(nextblock);
-            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            //nextblock = lastNodeInBlock.nextBlock;
-            //BlockController.printBlock(nextblock);
-            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            //nextblock = lastNodeInBlock.nextBlock;
-            //BlockController.printBlock(nextblock);
+            Console.WriteLine("AAA");
+            BlockController.printBlock(leafBlock);
+            //var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
+            //var nextblock = lastNodeInBlock.nextBlock;
+            ////BlockController.printBlock(nextblock);
 
             //if is leaf
-            if (block.child == null)
+            if (leafBlock.child == null)
             {
-                // CheckLeafBlock(nextblock);
+                CheckLeafBlock(leafBlock,key);
             }
-            BlockController.printBlock(nextblock);
-            lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            nextblock = lastNodeInBlock.nextBlock;
-            BlockController.printBlock(nextblock);
+            //BlockController.printBlock(nextblock);
+            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
+            //nextblock = lastNodeInBlock.nextBlock;
+            //BlockController.printBlock(nextblock);
         }
-        private static void CheckLeafBlock(Block block)
+        private static void CheckLeafBlock(Block block, int key)
         {
 
             if (block != null)
@@ -66,7 +50,7 @@ namespace CZ4031_Project1.Controllers
                     var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
                     var nextBlock = lastNodeInBlock.nextBlock;
                     var nextBlockNode = nextBlock.next;
-
+                    List<Block> siblingTraveredBlocks = BlockController.traverseGetBlockList(Experiment2Controller.tree.rootBlock, nextBlockNode.Key);
                     Node copyNode = new Node();
                     copyNode.Key = nextBlockNode.Key;
                     copyNode.nextBlock = nextBlock;
@@ -74,13 +58,17 @@ namespace CZ4031_Project1.Controllers
                     lastNodeInBlock.next = copyNode;
                     lastNodeInBlock.nextBlock = null;
 
-                    BlockController.DeleteAndShift(nextBlock, nextBlockNode.Key);
+                    BlockController.DeleteAndShift(siblingTraveredBlocks, nextBlock, copyNode.Key);
 
                 }
                 //Shifting of nodes in current block
-                BlockController.DeleteAndShift(block, Key);
+                BlockController.DeleteAndShift(TraversedBlocks,block, key);
 
             }
+        }
+        public static List<Block> GetCurrentTraversedBlocks()
+        {
+            return TraversedBlocks;
         }
 
         public static void insert(BPlusTree tree, int key, MemoryAddress address)
