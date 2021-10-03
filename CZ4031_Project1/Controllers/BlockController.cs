@@ -15,7 +15,7 @@ namespace CZ4031_Project1.Controllers
             Block newBlock = new Block();
             newBlock.Id = BlockCounter;
             // int numberOfNode = (blockSize - 16)/Node.nodeSize;
-            newBlock.maxNodes = GetMaxKeys(blockSize);
+            newBlock.maxNodes = GetMaxKeys();
             newBlock.numNodes = 0;
             newBlock.blockSize = blockSize;
             //newBlock.Nodes = new List<Node>();
@@ -24,7 +24,7 @@ namespace CZ4031_Project1.Controllers
             BlockCounter += 1;
             return newBlock;
         }
-        public static int GetMaxKeys(int blockSize)
+        public static int GetMaxKeys()
         {
             decimal maxKeys;
             int blockAddressSize = 10;
@@ -32,7 +32,7 @@ namespace CZ4031_Project1.Controllers
             List<MemoryAddress> addresses = MemoryAddressController.GetAddresses();
             byte[] pointerSize = addresses[addresses.Count - 1].Address;
             int keySize = sizeof(int);
-            maxKeys = Math.Floor(Convert.ToDecimal(blockSize - blockAddressSize - keySize) / (pointerSize.Length + keySize));
+            maxKeys = Math.Floor(Convert.ToDecimal(Constants.blockSize - blockAddressSize - keySize) / (pointerSize.Length + keySize));
             return (int)maxKeys;
         }
 

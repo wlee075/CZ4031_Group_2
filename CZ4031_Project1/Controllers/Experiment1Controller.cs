@@ -10,7 +10,7 @@ namespace CZ4031_Project1.Controllers
     public class Experiment1Controller
     {
         string Directory = MainController.GetMainDirectory() + "data.tsv";
-        const int blockSize = 100;
+        const int blockSize = Constants.blockSize;
         const int blockAddress = 8;
         double totalRecord = 0;
         int recordSize = 0;

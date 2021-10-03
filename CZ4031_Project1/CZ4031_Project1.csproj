@@ -55,6 +55,7 @@
     <Compile Include="Controllers\RecordController.cs" />
     <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\BPlusTree.cs" />
+    <Compile Include="Entities\Constants.cs" />
     <Compile Include="Entities\DictionaryPair.cs" />
     <Compile Include="Entities\MemoryAddress.cs" />
     <Compile Include="Entities\Node.cs" />

@@ -13,7 +13,7 @@ namespace CZ4031_Project1.Controllers
         public void BuildTree()
         {
             // Read from original dataset
-            tree = BPlusTreeController.createTree(100);
+            tree = BPlusTreeController.createTree(Constants.blockSize);
             List<MemoryAddress> addresses = MemoryAddressController.GetAddresses();
             /*
             int[] test = { 1, 4, 7, 10, 17, 21, 31, 25, 19, 20, 28,42};
