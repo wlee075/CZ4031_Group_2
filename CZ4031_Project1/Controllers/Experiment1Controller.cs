@@ -36,9 +36,9 @@ namespace CZ4031_Project1.Controllers
             recordSize = maxTconst + maxAverageRating - 1 + 4;
             Console.WriteLine("Min length of tconst: {0}", minTconst);
             Console.WriteLine("Max length of tconst: {0}", maxTconst);
-            Console.WriteLine("Max length of averageRating: {0}", minAverageRating);
+            Console.WriteLine("Min length of averageRating: {0}", minAverageRating);
             Console.WriteLine("Max length of averageRating: {0}", maxAverageRating);
-            Console.WriteLine("Max length of numVotes: {0}", minNumVotes);
+            Console.WriteLine("Min length of numVotes: {0}", minNumVotes);
             Console.WriteLine("Max length of numVotes: {0}", maxNumVotes);
 
             //Set memory address size
