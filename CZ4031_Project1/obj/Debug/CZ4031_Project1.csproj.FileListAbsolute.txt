@@ -19,3 +19,10 @@ C:\Users\wyman\OneDrive\Desktop\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_
 C:\Users\wyman\OneDrive\Desktop\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.csproj.CoreCompileInputs.cache
 C:\Users\wyman\OneDrive\Desktop\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.exe
 C:\Users\wyman\OneDrive\Desktop\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.pdb
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\bin\Debug\CZ4031_Project1.exe.config
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\bin\Debug\CZ4031_Project1.exe
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\bin\Debug\CZ4031_Project1.pdb
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.csproj.AssemblyReference.cache
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.csproj.CoreCompileInputs.cache
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.exe
+C:\Users\wyman\OneDrive\Desktop\blah2\CZ4031_Group_2\CZ4031_Project1\obj\Debug\CZ4031_Project1.pdb

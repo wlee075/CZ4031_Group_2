@@ -14,8 +14,8 @@ namespace CZ4031_Project1.Controllers
         {
             Block newBlock = new Block();
             newBlock.Id = BlockCounter;
-            int numberOfNode = (blockSize - 16)/Node.nodeSize;
-            newBlock.maxNodes = numberOfNode;
+            // int numberOfNode = (blockSize - 16)/Node.nodeSize;
+            newBlock.maxNodes = GetMaxKeys(blockSize);
             newBlock.numNodes = 0;
             newBlock.blockSize = blockSize;
             //newBlock.Nodes = new List<Node>();
@@ -24,6 +24,19 @@ namespace CZ4031_Project1.Controllers
             BlockCounter += 1;
             return newBlock;
         }
+        public static int GetMaxKeys(int blockSize)
+        {
+            decimal maxKeys;
+            int blockAddressSize = 10;
+            // Get size left for keys and pointers in a node after accounting for node's isLeaf 
+            List<MemoryAddress> addresses = MemoryAddressController.GetAddresses();
+            byte[] pointerSize = addresses[addresses.Count - 1].Address;
+            int keySize = sizeof(int);
+            maxKeys = Math.Floor(Convert.ToDecimal(blockSize - blockAddressSize - keySize) / (pointerSize.Length + keySize));
+            return (int)maxKeys;
+        }
+
+
         public static Block splitBlock(Block currBlock, int key, MemoryAddress address)
         {
             Node currNode = currBlock.next;

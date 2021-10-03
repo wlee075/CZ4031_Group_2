@@ -39,7 +39,7 @@ namespace CZ4031_Project1.Views
                     Views.Experiment5View.Display();
                     break;
                 case "6":
-                    //Environment.Exit(0);
+                    Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Invalid selection, please try again.");

@@ -14,9 +14,8 @@ namespace CZ4031_Project1.Views
         {
             Console.WriteLine("Please key in your selection: ");
             Console.WriteLine("1. Build the B+ Tree by numVotes");
-            Console.WriteLine("2. Show statistics");
-            Console.WriteLine("3. Back to main page");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("2. Back to main page");
+            Console.WriteLine("3. Exit");
 
 
             string input = Console.ReadLine();
@@ -26,12 +25,9 @@ namespace CZ4031_Project1.Views
                     controller.BuildTree();
                     break;
                 case "2":
-                    
-                    break;
-                case "3":
                     Views.MainView.Display();
                     break;
-                case "4":
+                case "3":
                     Environment.Exit(0);
                     break;
                 default:
