@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Controllers
 {
-    public class BPlusTreeControllerZT
+    public class Experiment5Controller
     {
     }
 }
