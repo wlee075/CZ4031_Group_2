@@ -227,17 +227,24 @@ namespace CZ4031_Project1.Controllers
             return nodeCount;
         }
         
+        //for Experiment 3
         public static List<MemoryAddress> retrieveMovie(BPlusTree tree, int numVote)
         {
             int i = 0;
 
-            Stack<Block> path = BlockController.traverseToLeaf(tree.rootBlock,numVote);
+            Stack<Block> path = BlockController.traverseToLeaf(tree.rootBlock, numVote);
 
             //get num and content of data blocks
             List<Block> blockList = BlockController.traverseGetBlockList(tree.rootBlock, numVote);
 
-            foreach(Block b in blockList)
+            Console.WriteLine("Displaying first 5 records...");
+
+            foreach (Block b in blockList)
             {
+                if (i == 5)
+                {
+                    break;
+                }
                 Console.Write("Content of block[" + i + "]: ");
                 BlockController.printBlock(b);
                 i++;
@@ -254,15 +261,21 @@ namespace CZ4031_Project1.Controllers
 
             foreach (Node n in nodeList)
             {
+                if (j == 5)
+                {
+                    break;
+                }
                 Console.Write("Content of node[" + j + "]: ");
                 NodeController.printNode(n);
                 j++;
             }
 
-            Console.WriteLine("Num of nodes accessed: " + j);
+            Console.WriteLine("Num of nodes accessed: " + nodeList.Count);
+
+            Console.WriteLine("");
 
             Node node = path.Pop().next;
-            
+
             while (node != null)
             {
 
@@ -276,6 +289,7 @@ namespace CZ4031_Project1.Controllers
             return null;
         }
 
+        //for Experiment 4
         public static List<MemoryAddress> retrieveMovieRange(BPlusTree tree, int min_numVote, int max_numVote)
         {
             int i = 0;
@@ -286,59 +300,50 @@ namespace CZ4031_Project1.Controllers
             List<Block> blockList = BlockController.traverseGetBlockList_range(tree.rootBlock, min_numVote, max_numVote);
             List<MemoryAddress> records = new List<MemoryAddress>();
 
+            Console.WriteLine("Displaying first 5 records...");
+
             foreach (Block b in blockList)
             {
+                if (i == 5)
+                {
+                    break;
+                }
                 Console.Write("Content of block[" + i + "]: ");
                 BlockController.printBlock(b);
                 i++;
-                
+
             }
+
+            Console.WriteLine("Num of blocks accessed: " + blockList.Count);
+
+            Console.WriteLine("");
+
             foreach (Block b in blockList)
             {
                 Node currNode = b.next;
                 while (currNode != null)
                 {
-                    Console.WriteLine("Content of node[" + n + "]: " + currNode.Key);
+                    if (n < 5)
+                    {
+                        Console.WriteLine("Content of node[" + n + "]: " + currNode.Key);
+                    }
+
                     n++;
+
                     records.AddRange(currNode.Address);
                     if (currNode.Key > min_numVote || (currNode.Key > max_numVote && b.child == null))
                     {
                         break;
                     }
-                    
+
                     currNode = currNode.next;
                 }
             }
-                //Console.WriteLine("Num of blocks accessed: " + path.Count);
 
-                Console.WriteLine("");
+            Console.WriteLine("Num of nodes accessed: " + n);
 
-            ////get num and content of index nodes
-            //List<Node> nodeList = BlockController.traverseGetNodeList(tree.rootBlock, min_numVote);
+            Console.WriteLine("");
 
-            //int j = 0;
-
-            //foreach (Node n in nodeList)
-            //{
-            //    Console.Write("Content of node[" + j + "]: ");
-            //    NodeController.printNode(n);
-            //    j++;
-            //}
-
-            //Console.WriteLine("Num of nodes accessed: " + j);
-
-            //Node node = path.Pop().next;
-
-            //while (node != null)
-            //{
-
-            //    if (node.Key == numVote)
-            //    {
-            //        return node.Address;
-            //    }
-
-            //    node = node.next;
-            //}
             return records;
         }
     }
