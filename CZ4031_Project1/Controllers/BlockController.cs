@@ -544,8 +544,8 @@ namespace CZ4031_Project1.Controllers
                 //deletes and points to next
                 prevNode.next = currNode.next;
                 currNode = null;
-                BlockController.printBlock(block);
                 Console.WriteLine("Updating complete");
+                BlockController.printBlock(block);
                 BPlusTreeController.DeletedAmount += 1;
             }
             else
