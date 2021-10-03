@@ -14,57 +14,42 @@ namespace CZ4031_Project1.Controllers
         static int minKeys { get; set; }
         static int nodeCount { get; set; }
         public static List<Block> TraversedBlocks { get; set; }
+        public static int  DeletedAmount {get;set;}
         public static void DeleteNode(int key)
         {
+
+            DeletedAmount = 0;
+            var tree = Experiment2Controller.tree;
+            var blocks = BlockController.traverseGetBlockList(tree.rootBlock, key);
+            TraversedBlocks = blocks;
+
             Block leafBlock = TraversedBlocks.Last();
             node = BlockController.FindNode(leafBlock, key);
             minKeys = Experiment2Controller.tree.getMinKeys() - 1;
             nodeCount = BlockController.GetNodeCount(leafBlock);
 
-            Console.WriteLine("AAA");
-            BlockController.printBlock(leafBlock);
-            //var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
-            //var nextblock = lastNodeInBlock.nextBlock;
-            ////BlockController.printBlock(nextblock);
 
-            //if is leaf
-            if (leafBlock.child == null)
+            //if has less than minimum keys aftering deleting
+            if (BlockController.GetNodeCount(leafBlock) - 1 <= minKeys)
             {
-                CheckLeafBlock(leafBlock,key);
-            }
-            //BlockController.printBlock(nextblock);
-            //lastNodeInBlock = BlockController.FindLastNodeInBlock(nextblock);
-            //nextblock = lastNodeInBlock.nextBlock;
-            //BlockController.printBlock(nextblock);
-        }
-        private static void CheckLeafBlock(Block block, int key)
-        {
+                //Borrow Keys from next sibling
+                var lastNodeInBlock = BlockController.FindLastNodeInBlock(leafBlock);
+                var nextBlock = lastNodeInBlock.nextBlock;
+                var nextBlockNode = nextBlock.next;
+                List<Block> siblingTraveredBlocks = BlockController.traverseGetBlockList(Experiment2Controller.tree.rootBlock, nextBlockNode.Key);
+                Node copyNode = new Node();
+                copyNode.Key = nextBlockNode.Key;
+                copyNode.nextBlock = nextBlock;
 
-            if (block != null)
-            {
+                lastNodeInBlock.next = copyNode;
+                lastNodeInBlock.nextBlock = null;
 
-                //if has less than minimum keys aftering deleting
-                if (BlockController.GetNodeCount(block) - 1 <= minKeys)
-                {
-                    //Borrow Keys from next sibling
-                    var lastNodeInBlock = BlockController.FindLastNodeInBlock(block);
-                    var nextBlock = lastNodeInBlock.nextBlock;
-                    var nextBlockNode = nextBlock.next;
-                    List<Block> siblingTraveredBlocks = BlockController.traverseGetBlockList(Experiment2Controller.tree.rootBlock, nextBlockNode.Key);
-                    Node copyNode = new Node();
-                    copyNode.Key = nextBlockNode.Key;
-                    copyNode.nextBlock = nextBlock;
-
-                    lastNodeInBlock.next = copyNode;
-                    lastNodeInBlock.nextBlock = null;
-
-                    BlockController.DeleteAndShift(siblingTraveredBlocks, nextBlock, copyNode.Key);
-
-                }
-                //Shifting of nodes in current block
-                BlockController.DeleteAndShift(TraversedBlocks,block, key);
+                BlockController.DeleteAndShift(siblingTraveredBlocks, nextBlock, copyNode.Key);
 
             }
+            //Shifting of nodes in current block
+            BlockController.DeleteAndShift(TraversedBlocks, leafBlock, key);
+            
         }
         public static List<Block> GetCurrentTraversedBlocks()
         {

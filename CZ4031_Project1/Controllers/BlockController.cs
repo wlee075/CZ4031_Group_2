@@ -521,6 +521,8 @@ namespace CZ4031_Project1.Controllers
         }
         public static void DeleteAndShift(List<Block> travblocks, Block block, int key)
         {
+            Console.WriteLine("Updating...");
+            BlockController.printBlock(block);
             Node prevNode = FindPrevNode(block, key);
             Node currNode = FindNode(block, key);
             //if previous node exists
@@ -529,6 +531,9 @@ namespace CZ4031_Project1.Controllers
                 //deletes and points to next
                 prevNode.next = currNode.next;
                 currNode = null;
+                BlockController.printBlock(block);
+                Console.WriteLine("Updating complete");
+                BPlusTreeController.DeletedAmount += 1;
             }
             else
             {
@@ -537,12 +542,22 @@ namespace CZ4031_Project1.Controllers
                 currNode.nextBlock = nextNode.nextBlock;
                 currNode.next = nextNode.next;
                 nextNode = null;
+                Console.WriteLine("Updating complete");
+                BlockController.printBlock(block);
+                BPlusTreeController.DeletedAmount += 1;
+
 
                 //Update node in parent block
                 Block parentBlock = GetParentBlock(travblocks, block);
+                Console.WriteLine("Updating parent block...");
+                BlockController.printBlock(parentBlock);
                 Node parentNode = FindNode(parentBlock, key);
                 parentNode.Key = currNode.Key;
+                Console.WriteLine("Updating parent complete");
+                BlockController.printBlock(parentBlock);
             }
+            
+           
         }
         public static int GetNodeCount(Block block)
         {
@@ -557,6 +572,7 @@ namespace CZ4031_Project1.Controllers
         }
         public static Block GetParentBlock(List<Block> blocks, Block block)
         {
+            
             Block parentBlock = null;
             for(int i = 0; i<blocks.Count; i++)
             {
@@ -566,11 +582,9 @@ namespace CZ4031_Project1.Controllers
 
                     if (blocks[nextI].Id == block.Id)
                     {
-
                         parentBlock = blocks[i];
                     }
-                }
-                
+                }         
             }
             return parentBlock;
         }

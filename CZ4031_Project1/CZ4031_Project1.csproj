@@ -65,6 +65,7 @@
     <Compile Include="Views\Experiment2View.cs" />
     <Compile Include="Views\Experiment3View.cs" />
     <Compile Include="Views\Experiment4View.cs" />
+    <Compile Include="Views\Experiment5View.cs" />
     <Compile Include="Views\MainView.cs" />
   </ItemGroup>
   <ItemGroup>

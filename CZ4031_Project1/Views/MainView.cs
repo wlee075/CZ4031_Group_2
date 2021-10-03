@@ -16,7 +16,8 @@ namespace CZ4031_Project1.Views
             Console.WriteLine("2. Experiment 2");
             Console.WriteLine("3. Experiment 3");
             Console.WriteLine("4. Experiment 4");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("4. Experiment 5");
+            Console.WriteLine("6. Exit");
 
             
             string input = Console.ReadLine();
@@ -35,25 +36,10 @@ namespace CZ4031_Project1.Views
                     Views.Experiment4View.Display();
                     break;
                 case "5":
+                    Views.Experiment5View.Display();
+                    break;
+                case "6":
                     //Environment.Exit(0);
-                    Experiment1Controller exp1 = new Experiment1Controller();
-                    exp1.StoreData();
-                    Experiment2Controller exp2 = new Experiment2Controller();
-                    exp2.BuildTree();
-                    var tree = Experiment2Controller.tree;
-
-                    var blocks = BlockController.traverseGetBlockList(tree.rootBlock, 18);
-                    BPlusTreeController.TraversedBlocks = blocks;
-                    var block = BlockController.FindBlock(blocks, 18);
-                    var parentBlock = BlockController.GetParentBlock(blocks, block);
-                    BPlusTreeController.DeleteNode(14);
-                    BlockController.printBlock(block);
-                    BlockController.printBlock(parentBlock);
-                    //foreach (var b in blocks)
-                    //{
-                    //    BlockController.printBlock(b);
-                    //}
-                    //BPlusTreeController.DeleteNode(8);
                     break;
                 default:
                     Console.WriteLine("Invalid selection, please try again.");
