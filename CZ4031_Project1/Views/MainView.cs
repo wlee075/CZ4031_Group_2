@@ -16,7 +16,7 @@ namespace CZ4031_Project1.Views
             Console.WriteLine("2. Experiment 2");
             Console.WriteLine("3. Experiment 3");
             Console.WriteLine("4. Experiment 4");
-            Console.WriteLine("4. Experiment 5");
+            Console.WriteLine("5. Experiment 5");
             Console.WriteLine("6. Exit");
 
             
