@@ -8,6 +8,7 @@ namespace CZ4031_Project1.Entities
 {
     public class Block
     {
+        public int Id {get;set;}
         public int maxNodes { get; set; }
         public int numNodes { get; set; }
         public int blockSize { get; set; }

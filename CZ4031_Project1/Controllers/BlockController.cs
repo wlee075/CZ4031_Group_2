@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace CZ4031_Project1.Controllers
 {
-    public class BlockController
+    public static class BlockController
     {
+        static int BlockCounter = 1;
         public static Block createBlock(int blockSize)
         {
             Block newBlock = new Block();
+            newBlock.Id = BlockCounter;
             int numberOfNode = (blockSize - 16)/Node.nodeSize;
             newBlock.maxNodes = numberOfNode;
             newBlock.numNodes = 0;
@@ -19,6 +21,7 @@ namespace CZ4031_Project1.Controllers
             //newBlock.Nodes = new List<Node>();
             newBlock.next = null;
             newBlock.child = null;
+            BlockCounter += 1;
             return newBlock;
         }
         public static Block splitBlock(Block currBlock, int key, MemoryAddress address)
@@ -467,20 +470,15 @@ namespace CZ4031_Project1.Controllers
             }
             Console.WriteLine();
         }
-        public static Block FindBlock(int key)
+        public static Block FindBlock(List<Block> blocks, int key)
         {
-            var tree = Experiment2Controller.tree;
-            var currBlock = tree.rootBlock;
-
-            while (currBlock != null)
+            foreach(var b in blocks)
             {
-                var node = FindNode(currBlock, key);
-                if (node != null)
+                var node = FindNode(b, key);
+                if(node != null)
                 {
-                    return currBlock;
+                    return b;
                 }
-
-                currBlock = currBlock.child;
             }
             return null;
         }
@@ -539,6 +537,8 @@ namespace CZ4031_Project1.Controllers
                 currNode.nextBlock = nextNode.nextBlock;
                 currNode.next = nextNode.next;
                 nextNode = null;
+
+                //Update parent block
             }
         }
         public static int GetNodeCount(Block block)
@@ -551,6 +551,25 @@ namespace CZ4031_Project1.Controllers
                 currNode = currNode.next;
             }
             return total;
+        }
+        public static Block GetParentBlock(List<Block> blocks, Block block)
+        {
+            Block parentBlock = null;
+            for(int i = 0; i<blocks.Count; i++)
+            {
+                int nextI = i + 1;
+                if (nextI < blocks.Count)
+                {
+
+                    if (blocks[nextI].Id == block.Id)
+                    {
+
+                        parentBlock = blocks[i];
+                    }
+                }
+                
+            }
+            return parentBlock;
         }
     }
 }

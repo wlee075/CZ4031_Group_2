@@ -42,7 +42,17 @@ namespace CZ4031_Project1.Views
                     exp2.BuildTree();
                     var tree = Experiment2Controller.tree;
 
-                    BPlusTreeController.DeleteNode(8);
+                    var blocks = BlockController.traverseGetBlockList(tree.rootBlock, 18);
+                    var block = BlockController.FindBlock(blocks, 18);
+                    var parentBlock = BlockController.GetParentBlock(blocks, block);
+
+                    BlockController.printBlock(block);
+                    BlockController.printBlock(parentBlock);
+                    //foreach (var b in blocks)
+                    //{
+                    //    BlockController.printBlock(b);
+                    //}
+                    //BPlusTreeController.DeleteNode(8);
                     break;
                 default:
                     Console.WriteLine("Invalid selection, please try again.");

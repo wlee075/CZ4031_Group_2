@@ -17,7 +17,7 @@ namespace CZ4031_Project1.Controllers
         public static void DeleteNode(int key)
         {
             Key = 12;
-            block = BlockController.FindBlock(key);
+            //block = BlockController.FindBlock(key);
             node = BlockController.FindNode(block, key);
             minKeys = Experiment2Controller.tree.getMinKeys() - 1;
             nodeCount = BlockController.GetNodeCount(block);
