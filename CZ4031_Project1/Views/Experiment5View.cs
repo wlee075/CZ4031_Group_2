@@ -23,7 +23,7 @@ namespace CZ4031_Project1.Views
             Console.Write("Content of Root Node: ");
             BlockController.printBlock(Experiment2Controller.tree.rootBlock);
             Console.Write("Content of 1st child Node: ");
-            BlockController.printBlock(Experiment2Controller.tree.rootBlock.child);
+            BlockController.printBlock(Experiment2Controller.tree.rootBlock.Child);
 
         }
     }

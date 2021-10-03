@@ -8,6 +8,6 @@ namespace CZ4031_Project1.Entities
 {
     class Constants
     {
-       public const int blockSize = 100;
+       public const int blockSize = 500;
     }
 }

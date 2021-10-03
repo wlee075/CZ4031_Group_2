@@ -45,7 +45,7 @@ namespace CZ4031_Project1.Controllers
             Console.Write("Content of Root Node: ");
             BlockController.printBlock(tree.rootBlock);
             Console.Write("Content of 1st child Node: ");
-            BlockController.printBlock(tree.rootBlock.child);
+            BlockController.printBlock(tree.rootBlock.Child);
             //List<MemoryAddress> list = BPlusTreeController.retrieveMovie(tree, 500);
             //decimal total = 0;
             //foreach (MemoryAddress r in list)

@@ -15,7 +15,7 @@ namespace CZ4031_Project1.Entities
         
         public int getN()
         {
-            return rootBlock.maxNodes;
+            return rootBlock.MaxNodes;
         }
         public int getNumberOfNodes()
         {
@@ -23,7 +23,7 @@ namespace CZ4031_Project1.Entities
         }
         public int getMinKeys()
         {
-            return (int)Math.Ceiling((decimal)rootBlock.maxNodes / 2);
+            return (int)Math.Ceiling((decimal)rootBlock.MaxNodes / 2);
         }
         public int getNumberOfInternalNodes()
         {
@@ -35,7 +35,7 @@ namespace CZ4031_Project1.Entities
             Block currBlock = rootBlock;
             while (currBlock != null)
             {
-                currBlock = currBlock.child;
+                currBlock = currBlock.Child;
                 h++;
             }
             return h;

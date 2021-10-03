@@ -15,12 +15,12 @@ namespace CZ4031_Project1.Controllers
             Block newBlock = new Block();
             newBlock.Id = BlockCounter;
             // int numberOfNode = (blockSize - 16)/Node.nodeSize;
-            newBlock.maxNodes = GetMaxKeys();
-            newBlock.numNodes = 0;
-            newBlock.blockSize = blockSize;
+            newBlock.MaxNodes = 39;
+            newBlock.NumNodes = 0;
+            newBlock.BlockSize = blockSize;
             //newBlock.Nodes = new List<Node>();
-            newBlock.next = null;
-            newBlock.child = null;
+            newBlock.Next = null;
+            newBlock.Child = null;
             BlockCounter += 1;
             return newBlock;
         }
@@ -39,12 +39,12 @@ namespace CZ4031_Project1.Controllers
 
         public static Block splitBlock(Block currBlock, int key, MemoryAddress address)
         {
-            Node currNode = currBlock.next;
-            int n = currBlock.numNodes;
+            Node currNode = currBlock.Next;
+            int n = currBlock.NumNodes;
             int split_n = (n + 1) / 2 + (n+1) % 2;
             Node splitNode = null;
             BlockController.appendKeyToBlock(currBlock,key,address);
-            if (n == currBlock.numNodes)
+            if (n == currBlock.NumNodes)
             {
                 return null;
             }
@@ -57,14 +57,14 @@ namespace CZ4031_Project1.Controllers
                 currNode = currNode.next;
                 split_n--;
             }
-            Block newBlock = BlockController.createBlock(currBlock.blockSize);
+            Block newBlock = BlockController.createBlock(currBlock.BlockSize);
             
             currNode = splitNode.next;
             splitNode.next = null;
-            currBlock.numNodes = (n + 1) / 2 + (n + 1) % 2; 
+            currBlock.NumNodes = (n + 1) / 2 + (n + 1) % 2; 
 
-            newBlock.next = currNode;
-            newBlock.numNodes = (n + 1) / 2;
+            newBlock.Next = currNode;
+            newBlock.NumNodes = (n + 1) / 2;
 
             while (currNode.next != null)
             {
@@ -79,11 +79,11 @@ namespace CZ4031_Project1.Controllers
         public static Block splitBlock(Block currBlock, int key, Block child)
         {
             
-            int n = currBlock.numNodes;
+            int n = currBlock.NumNodes;
             int split_n = n/2 + n%2;
             Node splitNode = null;
             BlockController.appendKeyToBlock(currBlock,key, child);
-            Node currNode = currBlock.next;
+            Node currNode = currBlock.Next;
             while (currNode != null)
             {
 
@@ -94,16 +94,16 @@ namespace CZ4031_Project1.Controllers
                 currNode = currNode.next;
                 split_n--;
             }
-            Block newBlock = BlockController.createBlock(currBlock.blockSize);
+            Block newBlock = BlockController.createBlock(currBlock.BlockSize);
 
             currNode = splitNode.next;
             splitNode.next = null;
-            currBlock.numNodes = n / 2 + n % 2;
-            newBlock.child = currNode.child;
+            currBlock.NumNodes = n / 2 + n % 2;
+            newBlock.Child = currNode.child;
 
             currNode = currNode.next;
-            newBlock.next = currNode;
-            newBlock.numNodes = n / 2;
+            newBlock.Next = currNode;
+            newBlock.NumNodes = n / 2;
             while (currNode.next != null)
             {
                 currNode = currNode.next;
@@ -114,16 +114,16 @@ namespace CZ4031_Project1.Controllers
         }
         public static void appendKeyToBlock(Block currBlock, int key, MemoryAddress address)
         {
-            if (currBlock.next == null)
+            if (currBlock.Next == null)
             {
                 Node node = NodeController.createNode(key, address);
-                currBlock.next = node;
-                currBlock.numNodes = 1;
+                currBlock.Next = node;
+                currBlock.NumNodes = 1;
             }
             else
             {
                 Node prevNode = null;
-                Node currNode = currBlock.next;
+                Node currNode = currBlock.Next;
 
                 while(currNode.Key < key && currNode.next != null)
                 {
@@ -139,7 +139,7 @@ namespace CZ4031_Project1.Controllers
                     currNode.next = NodeController.createNode(key, address);
                     currNode.next.nextBlock = currNode.nextBlock;
                     currNode.nextBlock = null;
-                    currBlock.numNodes++;
+                    currBlock.NumNodes++;
                 }
                 else
                 {
@@ -148,14 +148,14 @@ namespace CZ4031_Project1.Controllers
                         prevNode.next = NodeController.createNode(key,address);
                         prevNode = prevNode.next;
                         prevNode.next = currNode;
-                        currBlock.numNodes++;
+                        currBlock.NumNodes++;
                     }
                     else
                     {
                         prevNode = NodeController.createNode(key,address);
                         prevNode.next = currNode;
-                        currBlock.numNodes++;
-                        currBlock.next = prevNode;
+                        currBlock.NumNodes++;
+                        currBlock.Next = prevNode;
                     }
                 }
             }
@@ -163,17 +163,17 @@ namespace CZ4031_Project1.Controllers
         }
         public static void appendKeyToBlock(Block currBlock, int key, Block child)
         {
-            if (currBlock.next == null)
+            if (currBlock.Next == null)
             {
                 Node node = NodeController.createNode(key);
                 node.child = child;
-                currBlock.next = node;
-                currBlock.numNodes = 1;
+                currBlock.Next = node;
+                currBlock.NumNodes = 1;
             }
             else
             {
                 Node prevNode = null;
-                Node currNode = currBlock.next;
+                Node currNode = currBlock.Next;
                 while (currNode.Key < key && currNode.next != null)
                 {
                     prevNode = currNode;
@@ -189,7 +189,7 @@ namespace CZ4031_Project1.Controllers
                     currNode.next.nextBlock = currNode.nextBlock;
                     currNode.next.child = child;
                     currNode.nextBlock = null;
-                    currBlock.numNodes++;
+                    currBlock.NumNodes++;
                 }
                 else
                 {
@@ -201,26 +201,26 @@ namespace CZ4031_Project1.Controllers
                         prevNode.nextBlock = null;
                         prevNode = prevNode.next;
                         prevNode.next = currNode;
-                        currBlock.numNodes++;
+                        currBlock.NumNodes++;
                     }
                     else
                     {
                         prevNode = NodeController.createNode(key);
                         prevNode.child = child;
                         prevNode.next = currNode;
-                        currBlock.next = prevNode;
-                        currBlock.numNodes++;
+                        currBlock.Next = prevNode;
+                        currBlock.NumNodes++;
                     }
                 }
             }
         }
         public static int findSmallest(Block currBlock)
         {
-            while (currBlock.child != null)
+            while (currBlock.Child != null)
             {
-                currBlock = currBlock.child;
+                currBlock = currBlock.Child;
             }
-            return currBlock.next.Key;
+            return currBlock.Next.Key;
         }
         public static Stack<Block> traverseToLeaf(Block currBlock, int key)
         {
@@ -229,10 +229,10 @@ namespace CZ4031_Project1.Controllers
             Node currNode = null;
             Node prevNode = null;
 
-            while (currBlock.child != null)
+            while (currBlock.Child != null)
             {
                 prevNode = null;
-                currNode = currBlock.next;
+                currNode = currBlock.Next;
                 while (currNode != null)
                 {
                     if (currNode.Key > key)
@@ -244,7 +244,7 @@ namespace CZ4031_Project1.Controllers
                 }
                 if (prevNode == null)
                 {
-                    currBlock = currBlock.child;
+                    currBlock = currBlock.Child;
                 }
                 else
                 {
@@ -266,10 +266,10 @@ namespace CZ4031_Project1.Controllers
             Node currNode = null;
             Node prevNode = null;
 
-            while (currBlock.child != null)
+            while (currBlock.Child != null)
             {
                 prevNode = null;
-                currNode = currBlock.next;
+                currNode = currBlock.Next;
                 while (currNode != null)
                 {
                     if (currNode.Key > key)
@@ -281,7 +281,7 @@ namespace CZ4031_Project1.Controllers
                 }
                 if (prevNode == null)
                 {
-                    currBlock = currBlock.child;
+                    currBlock = currBlock.Child;
                 }
                 else
                 {
@@ -309,11 +309,11 @@ namespace CZ4031_Project1.Controllers
             Node currNode = null;
             Node prevNode = null;
 
-            while (currBlock.child != null)
+            while (currBlock.Child != null)
             {
                 prevNode = null;
 
-                currNode = currBlock.next;
+                currNode = currBlock.Next;
                 while (currNode != null)
                 {
                     if (currNode.Key > min_key)
@@ -327,7 +327,7 @@ namespace CZ4031_Project1.Controllers
 
                 if (prevNode == null)
                 {
-                    currBlock = currBlock.child;
+                    currBlock = currBlock.Child;
                 }
                 else
                 {
@@ -340,7 +340,7 @@ namespace CZ4031_Project1.Controllers
 
                 path.Push(currBlock);
             }
-            currNode = currBlock.next;
+            currNode = currBlock.Next;
 
             //leaf node, traverse to right
             while(currNode != null)
@@ -355,7 +355,7 @@ namespace CZ4031_Project1.Controllers
                 }
                 currBlock = currNode.nextBlock;
                 blockList.Add(currBlock);
-                currNode = currBlock.next;
+                currNode = currBlock.Next;
             }
 
 
@@ -372,10 +372,10 @@ namespace CZ4031_Project1.Controllers
             Node currNode = null;
             Node prevNode = null;
 
-            while (currBlock.child != null)
+            while (currBlock.Child != null)
             {
                 prevNode = null;
-                currNode = currBlock.next;
+                currNode = currBlock.Next;
                 while (currNode != null)
                 {
                     if (currNode.Key > key)
@@ -387,7 +387,7 @@ namespace CZ4031_Project1.Controllers
                 }
                 if (prevNode == null)
                 {
-                    currBlock = currBlock.child;
+                    currBlock = currBlock.Child;
                 }
                 else
                 {
@@ -420,10 +420,10 @@ namespace CZ4031_Project1.Controllers
                 nodeList.Add(currNode);
             }
 
-            while (currBlock.child != null)
+            while (currBlock.Child != null)
             {
                 prevNode = null;
-                currNode = currBlock.next;
+                currNode = currBlock.Next;
 
                 while (currNode != null)
                 {
@@ -438,7 +438,7 @@ namespace CZ4031_Project1.Controllers
                 }
                 if (prevNode == null)
                 {
-                    currBlock = currBlock.child;
+                    currBlock = currBlock.Child;
                 }
                 else
                 {
@@ -450,7 +450,7 @@ namespace CZ4031_Project1.Controllers
 
             }
 
-            Node last_node = currBlock.next;
+            Node last_node = currBlock.Next;
 
             while (last_node.next != null)
             {
@@ -471,7 +471,7 @@ namespace CZ4031_Project1.Controllers
 
         public static void printBlock(Block block)
         {
-            Node node = block.next;
+            Node node = block.Next;
             while(node != null)
             {
                 Console.Write(node.Key);
@@ -497,7 +497,7 @@ namespace CZ4031_Project1.Controllers
         }
         public static Node FindNode(Block block, int key)
         {
-            Node currNode = block.next;
+            Node currNode = block.Next;
             while (currNode != null)
             {
                 if (currNode.Key == key)
@@ -510,7 +510,7 @@ namespace CZ4031_Project1.Controllers
         }
         public static Node FindLastNodeInBlock(Block block)
         {
-            Node currNode = block.next;
+            Node currNode = block.Next;
             while (currNode.next != null)
             {
                 currNode = currNode.next;
@@ -520,7 +520,7 @@ namespace CZ4031_Project1.Controllers
         public static Node FindPrevNode(Block block, int key)
         {
             Node prevNode = null;
-            Node currNode = block.next;
+            Node currNode = block.Next;
             while (currNode != null)
             {
                 if (currNode.Key == key)
@@ -575,7 +575,7 @@ namespace CZ4031_Project1.Controllers
         public static int GetNodeCount(Block block)
         {
             int total = 1;
-            Node currNode = block.next;
+            Node currNode = block.Next;
             while (currNode.next != null)
             {
                 total += 1;

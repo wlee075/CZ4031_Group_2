@@ -35,7 +35,7 @@ namespace CZ4031_Project1.Controllers
                 //Borrow Keys from next sibling
                 var lastNodeInBlock = BlockController.FindLastNodeInBlock(leafBlock);
                 var nextBlock = lastNodeInBlock.nextBlock;
-                var nextBlockNode = nextBlock.next;
+                var nextBlockNode = nextBlock.Next;
                 List<Block> siblingTraveredBlocks = BlockController.traverseGetBlockList(Experiment2Controller.tree.rootBlock, nextBlockNode.Key);
                 Node copyNode = new Node();
                 copyNode.Key = nextBlockNode.Key;
@@ -62,15 +62,15 @@ namespace CZ4031_Project1.Controllers
             if (tree.rootBlock == null)
             {
                 tree.rootBlock = BlockController.createBlock(tree.blockSize);
-                tree.rootBlock.next = NodeController.createNode(key, address);
-                tree.rootBlock.numNodes++;
+                tree.rootBlock.Next = NodeController.createNode(key, address);
+                tree.rootBlock.NumNodes++;
                 return;
             }
             //if root has no child
-            else if(tree.rootBlock.child == null)
+            else if(tree.rootBlock.Child == null)
             {
 
-                if (tree.rootBlock.numNodes < tree.rootBlock.maxNodes)
+                if (tree.rootBlock.NumNodes < tree.rootBlock.MaxNodes)
                 {
                     BlockController.appendKeyToBlock(tree.rootBlock, key, address);
                 }
@@ -81,8 +81,8 @@ namespace CZ4031_Project1.Controllers
                     else
                     {
                         Block newRoot = BlockController.createBlock(tree.blockSize);
-                        BlockController.appendKeyToBlock(newRoot, newBlock.next.Key, newBlock);
-                        newRoot.child = tree.rootBlock;
+                        BlockController.appendKeyToBlock(newRoot, newBlock.Next.Key, newBlock);
+                        newRoot.Child = tree.rootBlock;
                         tree.rootBlock = newRoot;
                     }
                 }
@@ -92,7 +92,7 @@ namespace CZ4031_Project1.Controllers
             Stack<Block> path = BlockController.traverseToLeaf(tree.rootBlock,key);
             Block currBlock = path.Pop();
 
-            if (currBlock.numNodes == currBlock.maxNodes)
+            if (currBlock.NumNodes == currBlock.MaxNodes)
             {
                 Block newBlock = BlockController.splitBlock(currBlock, key, address);
                 Block nBlock = null;
@@ -101,7 +101,7 @@ namespace CZ4031_Project1.Controllers
                     return;
                 }
                 Block parentBlock = path.Pop();
-                while (parentBlock.numNodes == parentBlock.maxNodes)
+                while (parentBlock.NumNodes == parentBlock.MaxNodes)
                 {
 
                     nBlock = BlockController.splitBlock(parentBlock, BlockController.findSmallest(newBlock), newBlock);
@@ -110,7 +110,7 @@ namespace CZ4031_Project1.Controllers
                     if (path.Count == 0)
                     {
                         tree.rootBlock = BlockController.createBlock(tree.blockSize);
-                        tree.rootBlock.child = parentBlock;
+                        tree.rootBlock.Child = parentBlock;
                         parentBlock = tree.rootBlock;
                         break;
                     }
@@ -128,7 +128,7 @@ namespace CZ4031_Project1.Controllers
 
                 
             }
-            else if (currBlock.numNodes < currBlock.maxNodes)
+            else if (currBlock.NumNodes < currBlock.MaxNodes)
             {
                 BlockController.appendKeyToBlock(currBlock, key, address);
             }
@@ -147,7 +147,7 @@ namespace CZ4031_Project1.Controllers
             Block presBlock = tree.rootBlock;
             while (currBlock != null)
             {
-                Node currNode = currBlock.next;
+                Node currNode = currBlock.Next;
                 Console.Write("|");
                 while(currNode != null)
                 {
@@ -158,8 +158,8 @@ namespace CZ4031_Project1.Controllers
                     {
                         presBlock = currNode.nextBlock;
                         Console.Write("| -> ");
-                        Console.Write("(" + presBlock.numNodes + ")|");
-                        currNode = currNode.nextBlock.next;
+                        Console.Write("(" + presBlock.NumNodes + ")|");
+                        currNode = currNode.nextBlock.Next;
                         
                     }
                     else
@@ -168,7 +168,7 @@ namespace CZ4031_Project1.Controllers
                     }
                 }
                 
-                currBlock = currBlock.child;
+                currBlock = currBlock.Child;
                 Console.WriteLine();
             }
         }
@@ -180,13 +180,13 @@ namespace CZ4031_Project1.Controllers
             while (currBlock != null)
             {
                 nodeCount++;
-                Node currNode = currBlock.next;
+                Node currNode = currBlock.Next;
                 while (currNode != null)
                 {
                     if (currNode.nextBlock != null)
                     {
                         presBlock = currNode.nextBlock;
-                        currNode = currNode.nextBlock.next;
+                        currNode = currNode.nextBlock.Next;
                         nodeCount++;
                     }
                     else
@@ -195,7 +195,7 @@ namespace CZ4031_Project1.Controllers
                     }
                 }
 
-                currBlock = currBlock.child;
+                currBlock = currBlock.Child;
             }
             return nodeCount;
         }
@@ -206,14 +206,14 @@ namespace CZ4031_Project1.Controllers
             int nodeCount = 0;
             while (currBlock != null)
             {
-                Node currNode = currBlock.next;
+                Node currNode = currBlock.Next;
                 while (currNode != null)
                 {
                     nodeCount++;
                     if (currNode.nextBlock != null)
                     {
                         presBlock = currNode.nextBlock;
-                        currNode = currNode.nextBlock.next;
+                        currNode = currNode.nextBlock.Next;
 
                     }
                     else
@@ -222,7 +222,7 @@ namespace CZ4031_Project1.Controllers
                     }
                 }
 
-                currBlock = currBlock.child;
+                currBlock = currBlock.Child;
             }
             return nodeCount;
         }
@@ -274,7 +274,7 @@ namespace CZ4031_Project1.Controllers
 
             Console.WriteLine("");
 
-            Node node = path.Pop().next;
+            Node node = path.Pop().Next;
 
             while (node != null)
             {
@@ -320,7 +320,7 @@ namespace CZ4031_Project1.Controllers
 
             foreach (Block b in blockList)
             {
-                Node currNode = b.next;
+                Node currNode = b.Next;
                 while (currNode != null)
                 {
                     if (n < 5)
@@ -331,7 +331,7 @@ namespace CZ4031_Project1.Controllers
                     n++;
 
                     records.AddRange(currNode.Address);
-                    if (currNode.Key > min_numVote || (currNode.Key > max_numVote && b.child == null))
+                    if (currNode.Key > min_numVote || (currNode.Key > max_numVote && b.Child == null))
                     {
                         break;
                     }

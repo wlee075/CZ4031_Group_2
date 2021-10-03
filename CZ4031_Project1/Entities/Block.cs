@@ -9,12 +9,11 @@ namespace CZ4031_Project1.Entities
     public class Block
     {
         public int Id {get;set;}
-        public int maxNodes { get; set; }
-        public int numNodes { get; set; }
-        public int blockSize { get; set; }
+        public int MaxNodes { get; set; }
+        public int NumNodes { get; set; }
+        public int BlockSize { get; set; }
         public byte[] Address { get; set; }
-        //public List<Node> Nodes { get; set; }
-        public Node next { get; set; }
-        public Block child { get; set; }
+        public Node Next { get; set; }
+        public Block Child { get; set; }
     }
 }
